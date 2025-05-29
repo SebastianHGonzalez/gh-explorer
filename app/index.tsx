@@ -1,11 +1,16 @@
 import { StyleSheet, Text, View } from "react-native";
+import { useGithubListUsers } from "../hooks/useGithubListUsers";
 
 export default function Page() {
+const query = useGithubListUsers()
+
   return (
     <View style={styles.container}>
       <View style={styles.main}>
         <Text style={styles.title}>Hello World</Text>
-        <Text style={styles.subtitle}>This is the first page of your app.</Text>
+        <Text style={styles.subtitle}>This is the first pepita page of your app.</Text>
+        <Text>{JSON.stringify(query.data,undefined,2)}</Text>
+        <Text>{JSON.stringify(query.status)}</Text>
       </View>
     </View>
   );

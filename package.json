@@ -10,6 +10,7 @@
     "deploy": "npx expo export -p web && npx eas-cli@latest deploy"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.77.2",
     "expo": "^53.0.4",
     "expo-constants": "~17.1.4",
     "expo-linking": "~7.1.4",
@@ -25,7 +26,9 @@
     "react-native-web": "^0.20.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "@types/react": "~19.0.14",
+    "typescript": "~5.8.3"
   },
   "private": true
 }
