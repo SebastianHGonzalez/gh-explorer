@@ -1,6 +1,6 @@
 import { ListUsers, listUsersQuery } from "@/apis/github/users";
 import { t } from "@/i18n/t";
-import { H1, H2, H4, ROOT, SIZE, SURFACE } from "@/styles/constants";
+import { H1, H2, H4, SIZE, SURFACE } from "@/styles/constants";
 import { Route, route } from "@/utils/routes";
 import {
     useSuspenseInfiniteQuery
@@ -12,24 +12,13 @@ import { Avatar, List } from "react-native-paper";
 
 type Item = ListUsers[number];
 
-export function useGithubUserList() {
+export function GithubUserList() {
   const query = useSuspenseInfiniteQuery(listUsersQuery());
   const users = useMemo(
     () => query.data?.pages.flat() || [],
     [query.data?.pages]
   );
 
-  return {
-    users,
-    isLoading: query.isLoading,
-    isError: query.isError,
-    error: query.error,
-  };
-}
-
-type GithubUserListProps = ReturnType<typeof useGithubUserList>;
-
-export function GithubUserList({ users }: GithubUserListProps) {
   return (
     <FlatList
       data={users}
@@ -37,7 +26,6 @@ export function GithubUserList({ users }: GithubUserListProps) {
       renderItem={renderItem}
       ListEmptyComponent={EmptyList}
       ListHeaderComponent={ListHeader}
-      style={ROOT}
     />
   );
 }

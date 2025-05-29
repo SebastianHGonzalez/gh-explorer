@@ -1,11 +1,14 @@
-import { useGithubUserList, GithubUserList } from "@/components/GithubUserList";
+import { GithubUserList } from "@/components/GithubUserList";
+import { ROOT } from "@/styles/constants";
+import { Suspense } from "react";
+import { View } from "react-native";
 
 export function ListGithubUsersScreen() {
-  const githubUserList = useGithubUserList();
-
   return (
-    <>
-      <GithubUserList {...githubUserList} />
-    </>
+    <View style={ROOT}>
+      <Suspense>
+        <GithubUserList />
+      </Suspense>
+    </View>
   );
 }

@@ -2,6 +2,7 @@ import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persist
 import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import React, { useMemo } from "react";
+import { getQueryClientOptions } from "./getQueryClientOptions";
 
 export default function QueryClientProvider({
   children,
@@ -9,14 +10,7 @@ export default function QueryClientProvider({
   children: React.ReactNode;
 }) {
   const queryClient = useMemo(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            gcTime: 1000 * 60 * 60 * 24, // 24 hours
-          },
-        },
-      }),
+    () => new QueryClient(getQueryClientOptions()),
     []
   );
 

@@ -51,7 +51,7 @@ const listUsersSchema = z.array(
 );
 export type ListUsers = z.infer<typeof listUsersSchema>;
 
-const DEBUG_FAKE_RESPONSE = [
+const DEBUG_FAKE_RESPONSE: ListUsers = [
   {
     login: "mojombo",
     id: 1,

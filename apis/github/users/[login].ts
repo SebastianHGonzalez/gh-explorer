@@ -55,7 +55,7 @@ const describeUserSchema = z.object({
 });
 export type DescribeUser = z.infer<typeof describeUserSchema>;
 
-const DEBUG_FAKE_RESPONSE = {
+const DEBUG_FAKE_RESPONSE: DescribeUser = {
   login: "SebastianHGonzalez",
   id: 30028728,
   node_id: "MDQ6VXNlcjMwMDI4NzI4",
