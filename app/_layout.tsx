@@ -1,4 +1,4 @@
-import QueryClientProvider from "@/components/QueryClientProvider";
+import QueryClientProvider from "@/components/query/QueryClientProvider";
 import { Stack } from "expo-router";
 import React from "react";
 
