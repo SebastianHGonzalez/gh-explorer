@@ -89,6 +89,10 @@ export const SHADOW = {
   },
 } as const;
 
+export const ROOT: ViewStyle = {
+  padding: SIZE.md,
+} as const;
+
 export const SURFACE: ViewStyle = {
   backgroundColor: COLORS.surface,
   borderRadius: SIZE.md,
