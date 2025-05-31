@@ -2,11 +2,11 @@ import { ListUsers } from "@/apis/github/users";
 import { t } from "@/i18n/t";
 import { SIZE } from "@/styles/constants";
 import { Route, route } from "@/utils/routes";
-import { ListRenderItemInfo } from "@shopify/flash-list";
 import { Link } from "expo-router";
+import { ListRenderItemInfo } from "react-native";
 import { Avatar, List } from "react-native-paper";
-import { useH2Style } from "./common/H2";
 import { useContainerStyle } from "./common/Container";
+import { useH2Style } from "./common/H2";
 
 type Item = ListUsers[number];
 
