@@ -3,8 +3,8 @@ import { z } from "zod";
 
 export function describeUserQuery(login: string | undefined) {
   return queryOptions<DescribeUser>({
-    enabled: !!login, // Only run the query if login is defined
-    queryKey: ["github", "users"],
+    enabled: !!login,
+    queryKey: ["github", "user", login],
     queryFn: async () => {
       // return DEBUG_FAKE_RESPONSE; // For debugging purposes, replace with actual API call in production
 
