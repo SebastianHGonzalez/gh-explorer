@@ -3,9 +3,22 @@
     "scheme": "acme",
     "plugins": [
       "expo-router",
-      "expo-localization"
+      "expo-localization",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#1e2040",
+          "image": "./assets/splash/splash-icon.png",
+          "dark": {
+            "image": "./assets/splash-icon-dark.png",
+            "backgroundColor": "#1e2040"
+          },
+          "imageWidth": 200
+        }
+      ]
     ],
     "name": "gh-explorer",
-    "slug": "gh-explorer"
+    "slug": "gh-explorer",
+    "icon": "./assets/splash/splash-icon.png"
   }
 }
