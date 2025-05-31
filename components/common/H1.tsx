@@ -1,7 +1,6 @@
 import { StyleSheet, Text, TextProps, TextStyle } from "react-native";
 import { Slot } from "./Slot";
 import { MD3Theme, useTheme } from "react-native-paper";
-import { SIZE } from "@/styles/constants";
 
 type Variant = "default" | "error" | "warning" | "info";
 
@@ -10,9 +9,12 @@ interface ContainerProps extends TextProps {
   variant?: Variant;
 }
 
-export function useH1Style() {
+export function useH1Style(variant?: Variant): TextStyle {
   const theme = useTheme();
-  return theme.fonts.headlineLarge;
+  return {
+    ...theme.fonts.headlineLarge,
+    ...getVariant(theme, variant)
+  };
 }
 
 export function H1({
@@ -21,14 +23,13 @@ export function H1({
   style,
   ...props
 }: ContainerProps) {
-  const theme = useTheme();
   const h1Style = useH1Style();
   const Comp = asChild ? Slot : Text;
 
   return (
     <Comp
       {...props}
-      style={StyleSheet.flatten([getVariant(theme, variant), h1Style, style])}
+      style={StyleSheet.flatten([h1Style, style])}
     />
   );
 }

@@ -1,5 +1,7 @@
 import QueryClientProvider from "@/components/query/QueryClientProvider";
 import { t } from "@/i18n/t";
+import { FONT_WEIGHT } from "@/styles/constants";
+import { Roboto_400Regular, Roboto_600SemiBold, Roboto_700Bold, useFonts } from '@expo-google-fonts/roboto';
 import { Stack } from "expo-router";
 import React from "react";
 import { useColorScheme } from "react-native";
@@ -8,12 +10,22 @@ import { MD3DarkTheme, MD3LightTheme, PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function RootLayout() {
+  let [fontsLoaded] = useFonts({
+    Roboto_400Regular,
+    Roboto_600SemiBold,
+    Roboto_700Bold,
+  });
+
   const colorScheme = useColorScheme();
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   const paperTheme =
     colorScheme === "dark"
-      ? { ...MD3DarkTheme, colors: colors.dark }
-      : { ...MD3LightTheme, colors: colors.light };
+      ? { ...MD3DarkTheme, colors: colors.dark, fonts }
+      : { ...MD3LightTheme, colors: colors.light, fonts };
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -34,6 +46,25 @@ export default function RootLayout() {
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );
+}
+
+const fonts = {
+  ...MD3LightTheme.fonts,
+  displayLarge: { ...MD3LightTheme.fonts.displayLarge, fontWeight: FONT_WEIGHT.heavy },
+  displayMedium: { ...MD3LightTheme.fonts.displayMedium, fontWeight: FONT_WEIGHT.medium },
+  displaySmall: { ...MD3LightTheme.fonts.displaySmall, fontWeight: FONT_WEIGHT.light },
+  headlineLarge: { ...MD3LightTheme.fonts.headlineLarge, fontWeight: FONT_WEIGHT.heavy },
+  headlineMedium: { ...MD3LightTheme.fonts.headlineMedium, fontWeight: FONT_WEIGHT.medium },
+  headlineSmall: { ...MD3LightTheme.fonts.headlineSmall, fontWeight: FONT_WEIGHT.light },
+  titleLarge: { ...MD3LightTheme.fonts.titleLarge, fontWeight: FONT_WEIGHT.heavy },
+  titleMedium: { ...MD3LightTheme.fonts.titleMedium, fontWeight: FONT_WEIGHT.medium },
+  titleSmall: { ...MD3LightTheme.fonts.titleSmall, fontWeight: FONT_WEIGHT.light },
+  labelLarge: { ...MD3LightTheme.fonts.labelLarge, fontWeight: FONT_WEIGHT.heavy },
+  labelMedium: { ...MD3LightTheme.fonts.labelMedium, fontWeight: FONT_WEIGHT.medium },
+  labelSmall: { ...MD3LightTheme.fonts.labelSmall, fontWeight: FONT_WEIGHT.light },
+  bodyLarge: { ...MD3LightTheme.fonts.bodyLarge, fontWeight: FONT_WEIGHT.heavy },
+  bodyMedium: { ...MD3LightTheme.fonts.bodyMedium, fontWeight: FONT_WEIGHT.medium },
+  bodySmall: { ...MD3LightTheme.fonts.bodySmall, fontWeight: FONT_WEIGHT.light },
 }
 
 const colors = {

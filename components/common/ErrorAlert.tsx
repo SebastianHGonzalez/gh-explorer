@@ -1,4 +1,4 @@
-import { Text, StyleSheet } from "react-native"
+import { Text } from "react-native"
 import { Container } from "./Container"
 
 interface ErrorAlertProps {
@@ -7,7 +7,7 @@ interface ErrorAlertProps {
 
 export function ErrorAlert({ error }: ErrorAlertProps) {
     return (
-        <Container>
+        <Container variant="error" elevation={5}>
             <Text>{error.message}</Text>
         </Container>
     )

@@ -9,3 +9,9 @@ export const SIZE = {
   xxxl: 48,
   xxxxl: 64,
 } as const;
+
+export const FONT_WEIGHT = {
+  light: '400',
+  medium: '600',
+  heavy: '700',
+} as const;

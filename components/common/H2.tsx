@@ -9,9 +9,12 @@ interface ContainerProps extends TextProps {
   variant?: Variant;
 }
 
-export function useH2Style() {
+export function useH2Style(variant?: Variant): TextStyle {
   const theme = useTheme();
-  return theme.fonts.headlineMedium;
+  return {
+    ...theme.fonts.headlineMedium,
+    ...getVariant(theme, variant)
+  };
 }
 
 export function H2({
@@ -20,14 +23,13 @@ export function H2({
   style,
   ...props
 }: ContainerProps) {
-  const theme = useTheme();
   const h2Style = useH2Style();
   const Comp = asChild ? Slot : Text;
 
   return (
     <Comp
       {...props}
-      style={StyleSheet.flatten([getVariant(theme, variant), h2Style, style])}
+      style={StyleSheet.flatten([h2Style, style])}
     />
   );
 }

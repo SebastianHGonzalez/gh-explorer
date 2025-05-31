@@ -9,27 +9,24 @@ interface ContainerProps extends TextProps {
   variant?: Variant;
 }
 
-export function useH3Style(variant?: Variant): TextStyle {
+export function usePStyle(variant?: Variant): TextStyle {
   const theme = useTheme();
-  return {
-    ...theme.fonts.headlineSmall,
-    ...getVariant(theme, variant)
-  };
+  return getVariant(theme, variant);
 }
 
-export function H3({
+export function P({
   asChild = false,
   variant,
   style,
   ...props
 }: ContainerProps) {
-  const h3Style = useH3Style();
+  const PStyle = usePStyle();
   const Comp = asChild ? Slot : Text;
 
   return (
     <Comp
       {...props}
-      style={StyleSheet.flatten([h3Style, style])}
+      style={StyleSheet.flatten([PStyle, style])}
     />
   );
 }

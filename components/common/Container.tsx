@@ -37,7 +37,7 @@ export function Container({
   ...props
 }: ContainerProps) {
   const theme = useTheme();
-  const containerStyle = useContainerStyle();
+  const containerStyle = useContainerStyle(elevation);
   const Comp = asChild ? Slot : View;
 
   return (

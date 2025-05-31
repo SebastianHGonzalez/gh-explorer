@@ -9,9 +9,12 @@ interface ContainerProps extends TextProps {
   variant?: Variant;
 }
 
-export function useH4Style() {
+export function useH4Style(variant?: Variant): TextStyle {
   const theme = useTheme();
-  return theme.fonts.bodyLarge;
+  return {
+    ...theme.fonts.bodyLarge,
+    ...getVariant(theme, variant)
+  };
 }
 
 export function H4({
@@ -20,14 +23,13 @@ export function H4({
   style,
   ...props
 }: ContainerProps) {
-  const theme = useTheme();
   const h4Style = useH4Style();
   const Comp = asChild ? Slot : Text;
 
   return (
     <Comp
       {...props}
-      style={StyleSheet.flatten([getVariant(theme, variant), h4Style, style])}
+      style={StyleSheet.flatten([h4Style, style])}
     />
   );
 }

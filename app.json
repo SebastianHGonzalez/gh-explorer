@@ -15,7 +15,8 @@
           },
           "imageWidth": 200
         }
-      ]
+      ],
+      "expo-font"
     ],
     "name": "gh-explorer",
     "slug": "gh-explorer",
