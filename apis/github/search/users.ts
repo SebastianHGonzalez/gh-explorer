@@ -15,6 +15,7 @@ export function searchUsersQuery(input: SearchUsersInput) {
       if (input.order) searchParams.set('order', input.order);
       if (input.per_page) searchParams.set('per_page', input.per_page.toString());
       if (input.page) searchParams.set('page', input.page.toString());
+      if (pageParam) searchParams.set('page', pageParam.toString());
       
       const url = `https://api.github.com/search/users?${searchParams.toString()}`;
 

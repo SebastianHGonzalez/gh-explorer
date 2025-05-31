@@ -28,7 +28,7 @@ export default function RootLayout() {
       : { ...MD3LightTheme, colors: colors.light, fonts };
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView>
       <SafeAreaProvider>
         <PaperProvider theme={paperTheme}>
           <QueryClientProvider>
@@ -37,9 +37,16 @@ export default function RootLayout() {
               headerTintColor: paperTheme.colors.onSurface,
               contentStyle: { backgroundColor: paperTheme.colors.surface },
             })}>
-              <Stack.Screen name="index" options={{ title: t('ListGithubUsersScreen.title') }} />
-              <Stack.Screen name="search" options={{ title: t('SearchGithubUsersScreen.title') }} />
-              <Stack.Screen name="users/[login]" options={screen => ({ title: t('GithubUserDescriptionScreen.title', screen.route.params as never) })} />
+              <Stack.Screen name="index" options={{
+                title: t('ListGithubUsersScreen.title')
+              }} />
+              <Stack.Screen name="search" options={{
+                title: t('SearchGithubUsersScreen.title'),
+                presentation: 'modal'
+              }} />
+              <Stack.Screen name="users/[login]" options={screen => ({
+                title: t('GithubUserDescriptionScreen.title', screen.route.params as never)
+              })} />
             </Stack>
           </QueryClientProvider>
         </PaperProvider>

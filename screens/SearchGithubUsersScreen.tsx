@@ -13,17 +13,17 @@ import { Searchbar } from "react-native-paper";
 type Item = SearchUsers["items"][number];
 
 export function SearchGithubUsersScreen() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [q, setSearchQuery] = useState("");
 
-  const [debouncedSearchQuery] = useDebouncedValue(searchQuery, { wait: 500 });
-  const isEnabled = debouncedSearchQuery.length > 3;
+  const [debouncedQ] = useDebouncedValue(q, { wait: 500 });
+  const isEnabled = debouncedQ.length > 3;
 
   const search = useInfiniteQuery({
-    ...searchUsersQuery({ q: debouncedSearchQuery, per_page: 10 }),
+    ...searchUsersQuery({ q: debouncedQ, per_page: 10 }),
     enabled: isEnabled,
   });
-  const total = search.data?.pages.at(-1)?.total_count;
-  const suggestions = useMemo(
+
+  const results = useMemo(
     () => search.data?.pages.flatMap((page) => page.items) ?? [],
     [search.data?.pages]
   );
@@ -38,16 +38,16 @@ export function SearchGithubUsersScreen() {
         autoFocus
         placeholder="Search"
         onChangeText={onChangeSearch}
-        value={searchQuery}
+        value={q}
       />
       {search.error && <ErrorAlert error={search.error} />}
 
       {isEnabled && (
         <FlatList
-          data={suggestions}
+          data={results}
           renderItem={renderItem}
           keyExtractor={keyExtractor}
-          StickyHeaderComponent={() => <>count: {total}</>}
+          // StickyHeaderComponent={() => <>count: {total}</>}
           stickyHeaderHiddenOnScroll
         />
       )}
