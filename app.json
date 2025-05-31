@@ -1,27 +1,49 @@
 {
   "expo": {
-    "scheme": "acme",
+    "name": "gh-explorer",
+    "slug": "gh-explorer",
+    "backgroundColor": "#1e2040",
+    "primaryColor": "#440099",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash-screen.jpg",
+      "resizeMode": "cover"
+    },
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "scheme": "gh-explorer",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.satya164.reactnavigationtemplate"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.satya164.reactnavigationtemplate"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
     "plugins": [
-      "expo-router",
-      "expo-localization",
+      "expo-asset",
       [
         "expo-splash-screen",
         {
           "backgroundColor": "#1e2040",
-          "image": "./assets/splash/splash-icon.png",
-          "dark": {
-            "image": "./assets/splash-icon-dark.png",
-            "backgroundColor": "#1e2040"
-          },
-          "imageWidth": 200
+          "image": "./assets/splash-icon.png"
         }
       ],
-      "expo-font"
+      "expo-font",
+      "react-native-edge-to-edge"
     ],
-    "name": "gh-explorer",
-    "slug": "gh-explorer",
-    "icon": "./assets/splash/splash-icon.png",
-    "backgroundColor": "#1e2040",
-    "primaryColor": "#440099"
+    "extra": {
+      "eas": {
+        "projectId": "e0358a49-9647-468b-8c7f-430581b2d4f7"
+      }
+    }
   }
 }

@@ -4,14 +4,14 @@ import {
 import { ErrorAlert } from "@/components/common/ErrorAlert";
 import { H4 } from "@/components/common/H4";
 import { Screen } from "@/components/common/Screen";
-import { useTextStyle } from "@/components/common/useTextStyle";
 import { GithubUserListItem } from "@/components/GithubUserListItem";
 import { t } from "@/i18n/t";
 import { FONT_WEIGHT, SIZE } from "@/styles/constants";
 import { useDebouncedValue } from "@tanstack/react-pacer/debouncer";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCallback, useMemo, useState } from "react";
-import { Text, FlatList, ListRenderItemInfo } from "react-native";
+import { Text } from "react-native";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { Searchbar } from "react-native-paper";
 
 type Item = SearchUsers["items"][number];
@@ -48,14 +48,14 @@ export function SearchGithubUsersScreen() {
 
       {search.error && <ErrorAlert error={search.error} />}
 
-      <FlatList
+      <FlashList
         data={results}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         ListHeaderComponent={search.isSuccess ? (
           <H4 style={{ margin: SIZE.md }}>
             {t('SearchGithubUsersScreen.listHeader', {
-              q: <Text style={{ fontStyle: 'italic', fontWeight: FONT_WEIGHT.light }}>{debouncedQ}</Text>,
+              q: <Text key="q" style={{ fontStyle: 'italic', fontWeight: FONT_WEIGHT.light }}>{debouncedQ}</Text>,
               count: search.data?.pages.at(-1)?.total_count.toString() ?? ''
             })}
           </H4>
@@ -67,7 +67,7 @@ export function SearchGithubUsersScreen() {
 }
 
 function keyExtractor(item: Item) {
-  return item.login;
+  return item.id.toString();
 }
 
 function renderItem(info: ListRenderItemInfo<Item>) {

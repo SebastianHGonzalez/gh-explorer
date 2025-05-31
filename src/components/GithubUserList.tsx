@@ -1,8 +1,8 @@
 import { ListUsers, listUsersQuery } from "@/apis/github/users";
 import { t } from "@/i18n/t";
-import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { FlatList, ListRenderItemInfo } from "react-native";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { List } from "react-native-paper";
 import { ErrorAlert } from "./common/ErrorAlert";
 import { GithubUserListItem } from "./GithubUserListItem";
@@ -11,7 +11,7 @@ import { useTextStyle } from "./common/useTextStyle";
 type Item = ListUsers[number];
 
 export function GithubUserList() {
-  const query = useSuspenseInfiniteQuery(listUsersQuery());
+  const query = useInfiniteQuery(listUsersQuery());
   const users = useMemo(
     () => query.data?.pages?.flat() || [],
     [query.data?.pages]
@@ -21,7 +21,7 @@ export function GithubUserList() {
     <>
       {query.error && <ErrorAlert error={query.error} />}
 
-      <FlatList
+      <FlashList
         data={users}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
@@ -33,7 +33,7 @@ export function GithubUserList() {
 }
 
 function keyExtractor(item: Item) {
-  return item.login;
+  return item.id.toString();
 }
 
 function renderItem(info: ListRenderItemInfo<Item>) {

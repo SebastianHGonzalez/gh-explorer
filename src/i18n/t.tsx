@@ -1,12 +1,12 @@
 import { getLocales } from 'expo-localization';
-import { ReactNode } from 'react';
+import { Fragment, ReactNode } from 'react';
 
 export const DEFAULT_LANGUAGE = 'en';
 
 export const translationGetters = {
   // lazy requires (metro bundler does not support symlinks)
-  en: () => require('../assets/locales/en/translations.json'),
-  es: () => require('../assets/locales/es/translations.json'),
+  en: () => require('../../assets/locales/en/translations.json'),
+  es: () => require('../../assets/locales/es/translations.json'),
 };
 
 function getTranslations(): Record<string, string> {
@@ -34,11 +34,7 @@ export function t(key: string, params?: Record<string, string | number | ReactNo
     }, translation);
 
     if (Object.values(params).some(p => typeof p === 'object')) {
-      return (
-        <>
-          {str.split(/[{}]/).map(strPart => params[strPart] || strPart)}
-        </>
-      )
+      return str.split(/[{}]/).map((strPart, i) => <Fragment key={strPart + i}>{params[strPart] || strPart}</Fragment>)
     }
   }
 

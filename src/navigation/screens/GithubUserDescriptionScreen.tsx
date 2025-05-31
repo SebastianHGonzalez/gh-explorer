@@ -3,8 +3,7 @@ import { H1 } from "@/components/common/H1";
 import { P } from "@/components/common/P";
 import { Screen } from "@/components/common/Screen";
 import { SIZE } from "@/styles/constants";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { useLocalSearchParams } from "expo-router";
+import { useQuery } from "@tanstack/react-query";
 import { View } from "react-native";
 import { Avatar, useTheme } from "react-native-paper";
 
@@ -15,7 +14,7 @@ type GithubUserDescriptionScreenLocalSearchParams = {
 export function GithubUserDescriptionScreen() {
   const { login } =
     useLocalSearchParams<GithubUserDescriptionScreenLocalSearchParams>();
-  const query = useSuspenseQuery(describeUserQuery(login));
+  const query = useQuery(describeUserQuery(login));
   const user = query.data;
 const theme = useTheme();
   return (

@@ -2,10 +2,10 @@ import { Screen } from "@/components/common/Screen";
 import { GithubUserList } from "@/components/GithubUserList";
 import { ErrorBoundary } from "@/components/common/ErrorBoundary";
 import { Route } from "@/utils/routes";
-import { Link } from "expo-router";
 import { Suspense } from "react";
 import { Searchbar } from "react-native-paper";
 import { ErrorAlert } from "@/components/common/ErrorAlert";
+import { Link } from "@/components/common/Link";
 
 export function ListGithubUsersScreen() {
   return (

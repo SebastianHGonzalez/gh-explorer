@@ -1,12 +1,13 @@
 import { describeUserQuery } from "@/apis/github/users/[login]";
+import { Link } from "@/components/common/Link";
 import { t } from "@/i18n/t";
 import { SIZE } from "@/styles/constants";
 import { Route, route } from "@/utils/routes";
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { Link } from "expo-router";
+import { ListRenderItemInfo } from "@shopify/flash-list";
+import { useQuery } from "@tanstack/react-query";
 import { Suspense } from "react";
-import { ListRenderItemInfo, StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { Avatar, List } from "react-native-paper";
 import { ErrorBoundary } from "./common/ErrorBoundary";
 import { H2 } from "./common/H2";
@@ -35,8 +36,10 @@ export function GithubUserListItem(props: ListRenderItemInfo<Item>) {
 function SimpleListItem({ item: { avatar_url, login } }: ListRenderItemInfo<Item>) {
   const containerStyle = useContainerStyle();
 
+debugger
+
   return (
-    <Link href={route(Route.DescribeGithubUser, { login })} asChild>
+    <Link href={Route.DescribeGithubUser} params={{ login }} asChild>
       <List.Item
         title={<>
           <H2>{login}</H2>
@@ -57,7 +60,7 @@ function SimpleListItem({ item: { avatar_url, login } }: ListRenderItemInfo<Item
 }
 
 function DetailedListItem({ item: { avatar_url, login } }: ListRenderItemInfo<Item>) {
-  const query = useSuspenseQuery({ ...describeUserQuery(login), })
+  const query = useQuery({ ...describeUserQuery(login), })
   const {
     name,
     bio,
@@ -71,7 +74,7 @@ function DetailedListItem({ item: { avatar_url, login } }: ListRenderItemInfo<It
   const containerStyle = useContainerStyle();
 
   return (
-    <Link href={route(Route.DescribeGithubUser, { login })} asChild>
+    <Link href={Route.DescribeGithubUser} params={{ login }} asChild>
       <List.Item
         title={<>
           <H2>{name || login}</H2>

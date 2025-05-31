@@ -1,15 +1,23 @@
-import QueryClientProvider from "@/components/query/QueryClientProvider";
-import { t } from "@/i18n/t";
-import { FONT_WEIGHT } from "@/styles/constants";
 import { Roboto_400Regular, Roboto_600SemiBold, Roboto_700Bold, useFonts } from '@expo-google-fonts/roboto';
-import { Stack } from "expo-router";
-import React from "react";
+import { Assets as NavigationAssets } from '@react-navigation/elements';
+import { Asset } from 'expo-asset';
+import { hideAsync, preventAutoHideAsync } from 'expo-splash-screen';
 import { useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { MD3DarkTheme, MD3LightTheme, PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import QueryClientProvider from "./components/query/QueryClientProvider";
+import { Navigation } from './navigation';
+import { FONT_WEIGHT } from './styles/constants';
+import { DefaultTheme } from '@react-navigation/native';
 
-export default function RootLayout() {
+Asset.loadAsync([
+  ...NavigationAssets,
+]);
+
+preventAutoHideAsync();
+
+export function App() {
   let [fontsLoaded] = useFonts({
     Roboto_400Regular,
     Roboto_600SemiBold,
@@ -27,31 +35,33 @@ export default function RootLayout() {
       ? { ...MD3DarkTheme, colors: colors.dark, fonts }
       : { ...MD3LightTheme, colors: colors.light, fonts };
 
+  const navigationTheme =
+    colorScheme === "dark"
+      ? { ...DefaultTheme, dark: true, colors: colors.dark }
+      : { ...DefaultTheme, colors: colors.light };
+
   return (
-    <GestureHandlerRootView>
-      <SafeAreaProvider>
-        <PaperProvider theme={paperTheme}>
-          <QueryClientProvider>
-            <Stack screenOptions={(screen) => ({
-              headerStyle: { backgroundColor: paperTheme.colors.surface },
-              headerTintColor: paperTheme.colors.onSurface,
-              contentStyle: { backgroundColor: paperTheme.colors.surface },
-            })}>
-              <Stack.Screen name="index" options={{
-                title: t('ListGithubUsersScreen.title')
-              }} />
-              <Stack.Screen name="search" options={{
-                title: t('SearchGithubUsersScreen.title'),
-                presentation: 'modal'
-              }} />
-              <Stack.Screen name="users/[login]" options={screen => ({
-                title: t('GithubUserDescriptionScreen.title', screen.route.params as never)
-              })} />
-            </Stack>
-          </QueryClientProvider>
-        </PaperProvider>
-      </SafeAreaProvider>
-    </GestureHandlerRootView>
+      <GestureHandlerRootView>
+        <SafeAreaProvider>
+          <PaperProvider theme={paperTheme}>
+            <QueryClientProvider>
+              <Navigation
+              theme={navigationTheme}
+                linking={{
+                  enabled: 'auto',
+                  prefixes: [
+                    // Change the scheme to match your app's scheme defined in app.json
+                    'helloworld://',
+                  ],
+                }}
+                onReady={() => {
+                  hideAsync();
+                }}
+              />
+            </QueryClientProvider>
+          </PaperProvider>
+        </SafeAreaProvider>
+      </GestureHandlerRootView>
   );
 }
 
@@ -116,6 +126,12 @@ const colors = {
     surfaceDisabled: "rgba(30, 27, 30, 0.12)",
     onSurfaceDisabled: "rgba(30, 27, 30, 0.38)",
     backdrop: "rgba(53, 46, 54, 0.4)",
+
+
+    card: "rgb(255, 251, 255)",
+    text: "rgb(30, 27, 30)",
+    border: "rgb(30, 27, 30)",
+    notification: "rgb(186, 26, 26)",
   },
   dark: {
     primary: "rgb(235, 178, 255)",
@@ -158,5 +174,11 @@ const colors = {
     surfaceDisabled: "rgba(232, 224, 229, 0.12)",
     onSurfaceDisabled: "rgba(232, 224, 229, 0.38)",
     backdrop: "rgba(53, 46, 54, 0.4)",
+
+
+    card: "rgb(30, 27, 30)",
+    text: "rgb(232, 224, 229)",
+    border: "rgb(232, 224, 229)",
+    notification: "rgb(255, 180, 171)",
   },
 };
