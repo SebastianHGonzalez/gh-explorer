@@ -7,7 +7,7 @@ export function listUsersQuery() {
     getNextPageParam: (lastPage, allPages) => lastPage.at(-1)?.id ?? 0,
     queryKey: ["github", "users"],
     queryFn: async ({ pageParam }) => {
-      // return DEBUG_FAKE_RESPONSE; // For debugging purposes, replace with actual API call in production
+      return DEBUG_FAKE_RESPONSE; // For debugging purposes, replace with actual API call in production
 
       const searchParams = new URLSearchParams();
       if (pageParam) {

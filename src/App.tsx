@@ -1,15 +1,16 @@
 import { Roboto_400Regular, Roboto_600SemiBold, Roboto_700Bold, useFonts } from '@expo-google-fonts/roboto';
 import { Assets as NavigationAssets } from '@react-navigation/elements';
+import { NavigationContainer } from '@react-navigation/native';
 import { Asset } from 'expo-asset';
 import { hideAsync, preventAutoHideAsync } from 'expo-splash-screen';
+import React from 'react';
 import { useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { MD3DarkTheme, MD3LightTheme, PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import QueryClientProvider from "./components/query/QueryClientProvider";
-import { Navigation } from './navigation';
+import { RootStack } from './navigation';
 import { FONT_WEIGHT } from './styles/constants';
-import { DefaultTheme } from '@react-navigation/native';
 
 Asset.loadAsync([
   ...NavigationAssets,
@@ -35,33 +36,27 @@ export function App() {
       ? { ...MD3DarkTheme, colors: colors.dark, fonts }
       : { ...MD3LightTheme, colors: colors.light, fonts };
 
-  const navigationTheme =
-    colorScheme === "dark"
-      ? { ...DefaultTheme, dark: true, colors: colors.dark }
-      : { ...DefaultTheme, colors: colors.light };
-
   return (
-      <GestureHandlerRootView>
-        <SafeAreaProvider>
-          <PaperProvider theme={paperTheme}>
-            <QueryClientProvider>
-              <Navigation
-              theme={navigationTheme}
-                linking={{
-                  enabled: 'auto',
-                  prefixes: [
-                    // Change the scheme to match your app's scheme defined in app.json
-                    'helloworld://',
-                  ],
-                }}
-                onReady={() => {
-                  hideAsync();
-                }}
-              />
-            </QueryClientProvider>
-          </PaperProvider>
-        </SafeAreaProvider>
-      </GestureHandlerRootView>
+    <GestureHandlerRootView>
+      <SafeAreaProvider>
+        <PaperProvider theme={paperTheme}>
+          <QueryClientProvider>
+            <NavigationContainer
+              linking={{
+                prefixes: [
+                  // Change the scheme to match your app's scheme defined in app.json
+                  'helloworld://',
+                ],
+              }}
+              onReady={() => {
+                hideAsync();
+              }}>
+              <RootStack />
+            </NavigationContainer>
+          </QueryClientProvider>
+        </PaperProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }
 

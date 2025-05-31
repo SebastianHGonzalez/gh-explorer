@@ -41,7 +41,7 @@ export function SearchGithubUsersScreen() {
 
       <Searchbar
         autoFocus
-        placeholder="Search"
+        placeholder={t('SearchGithubUsersScreen.placeholder')}
         onChangeText={onChangeSearch}
         value={q}
       />
@@ -55,7 +55,7 @@ export function SearchGithubUsersScreen() {
         ListHeaderComponent={search.isSuccess ? (
           <H4 style={{ margin: SIZE.md }}>
             {t('SearchGithubUsersScreen.listHeader', {
-              q: <Text key="q" style={{ fontStyle: 'italic', fontWeight: FONT_WEIGHT.light }}>{debouncedQ}</Text>,
+              q: <Text style={{ fontStyle: 'italic', fontWeight: FONT_WEIGHT.light }}>{debouncedQ}</Text>,
               count: search.data?.pages.at(-1)?.total_count.toString() ?? ''
             })}
           </H4>

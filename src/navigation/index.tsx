@@ -1,94 +1,41 @@
-import { t } from '@/i18n/t';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {
-  createStaticNavigation,
-  StaticParamList,
-} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Image } from 'react-native';
 import { FavoritesScreen } from './screens/FavoritesScreen';
 import { GithubUserDescriptionScreen } from './screens/GithubUserDescriptionScreen';
 import { ListGithubUsersScreen } from './screens/ListGithubUsersScreen';
 import { SearchGithubUsersScreen } from './screens/SearchGithubUsersScreen';
+import { useTheme } from 'react-native-paper';
+import { RouteName } from '@/utils/routes';
 
-const HomeTabs = createBottomTabNavigator({
-  screens: {
-    ListGithubUsersScreen: {
-      screen: ListGithubUsersScreen,
-      options: {
-        title: t('ListGithubUsersScreen.tab'),
-        tabBarIcon: ({ color, size }) => (
-          <Image
-            // source={newspaper}
-            tintColor={color}
-            style={{
-              width: size,
-              height: size,
-            }}
-          />
-        ),
-      },
-    },
-    SearchGithubUsersScreen: {
-      screen: SearchGithubUsersScreen,
-      options: {
-        animation: 'fade',
-        transitionSpec: {
-          animation: 'timing',
-          config: {
-            duration: 100,
-          }
-        }
-      }
-    },
-    FavoritesScreen: {
-      screen: FavoritesScreen,
-      options: {
-        tabBarIcon: ({ color, size }) => (
-          <Image
-            // source={bell}
-            tintColor={color}
-            style={{
-              width: size,
-              height: size,
-            }}
-          />
-        ),
-      },
-    },
-  },
-});
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
-const RootStack = createNativeStackNavigator({
-  screenOptions: ({ theme }) => ({
-    headerStyle: { backgroundColor: theme.colors.background },
-    headerTintColor: theme.colors.text,
-    contentStyle: { backgroundColor: theme.colors.background },
-  }),
-  screens: {
-    HomeTabs: {
-      screen: HomeTabs,
-      options: {
-        title: 'Home',
-        headerShown: false,
-      },
-    },
-    GithubUserDescriptionScreen: {
-      screen: GithubUserDescriptionScreen,
-      initialParams: { login: '' },
-      options: {
-        title: ':login',
-      }
-    },
-  },
-});
+function TabsStack() {
+  const theme = useTheme();
 
-export const Navigation = createStaticNavigation(RootStack);
+  return (
+    <Tab.Navigator screenOptions={{
+      headerStyle: { backgroundColor: theme.colors.surface },
+      headerTintColor: theme.colors.onSurface,
+      sceneStyle: { backgroundColor: theme.colors.surface },
+    }}>
+      <Tab.Screen name={RouteName.ListGithubUsersScreen} component={ListGithubUsersScreen} />
+      <Tab.Screen name={RouteName.SearchGithubUsersScreen} component={SearchGithubUsersScreen} />
+      <Tab.Screen name={RouteName.FavoritesScreen} component={FavoritesScreen} />
+    </Tab.Navigator>
+  )
+}
 
-type RootStackParamList = StaticParamList<typeof RootStack>;
-
-declare global {
-  namespace ReactNavigation {
-    interface RootParamList extends RootStackParamList { }
-  }
+export function RootStack() {
+  const theme = useTheme();
+  return (
+    <Stack.Navigator screenOptions={{
+      headerStyle: { backgroundColor: theme.colors.surface },
+      headerTintColor: theme.colors.onSurface,
+      contentStyle: { backgroundColor: theme.colors.surface },
+    }}>
+      <Stack.Screen name="(tabs)" component={TabsStack} options={{ headerShown: false }} />
+      <Stack.Screen name={RouteName.GithubUserDescriptionScreen} initialParams={{ login: '' }} component={GithubUserDescriptionScreen as never} />
+    </Stack.Navigator>
+  )
 }
