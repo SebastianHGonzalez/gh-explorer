@@ -1,32 +1,12 @@
-import { SIZE } from "@/styles/constants";
-import { StyleSheet, View, ViewProps, ViewStyle } from "react-native";
-import { MD3Theme, useTheme } from "react-native-paper";
+import { StyleSheet, View, ViewProps } from "react-native";
+import { useTheme } from "react-native-paper";
 import { Slot } from "./Slot";
-
-type Variant = "default" | "error" | "warning" | "info";
-type Elevation =  0 | 1 | 2 | 3 | 4 | 5;
+import { ContainerType, Elevation, useContainerStyle } from "./useContainerStyle";
 
 interface ContainerProps extends ViewProps {
   asChild?: boolean;
-  variant?: Variant;
-  elevation: Elevation
-}
-
-export function useContainerStyle(elevation: Elevation): ViewStyle {
-  const theme = useTheme();
-
-  return {
-    elevation: elevation,
-    backgroundColor: theme.colors.elevation[`level${elevation}`],
-    borderColor: theme.colors.primaryContainer,
-    borderRadius: theme.roundness,
-    borderWidth: SIZE.xxs,
-    padding: SIZE.sm,
-    marginHorizontal: SIZE.sm,
-    marginVertical: SIZE.md,
-    paddingHorizontal: SIZE.lg,
-    paddingVertical: SIZE.md,
-  };
+  variant?: ContainerType;
+  elevation?: Elevation
 }
 
 export function Container({
@@ -37,26 +17,16 @@ export function Container({
   ...props
 }: ContainerProps) {
   const theme = useTheme();
-  const containerStyle = useContainerStyle(elevation);
+  const containerStyle = useContainerStyle(variant, elevation);
   const Comp = asChild ? Slot : View;
 
   return (
     <Comp
       {...props}
       style={StyleSheet.flatten([
-        getVariant(theme, variant),
         containerStyle,
         style,
       ])}
     />
   );
-}
-
-function getVariant(theme: MD3Theme, variant?: Variant): ViewStyle {
-  switch (variant) {
-    case "error":
-      return { backgroundColor: theme.colors.error };
-    default:
-      return { backgroundColor: theme.colors.background };
-  }
 }

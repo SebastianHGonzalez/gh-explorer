@@ -5,14 +5,14 @@ import { Route, route } from "@/utils/routes";
 import { Link } from "expo-router";
 import { ListRenderItemInfo } from "react-native";
 import { Avatar, List } from "react-native-paper";
-import { useContainerStyle } from "./common/Container";
-import { useH2Style } from "./common/H2";
+import { useTextStyle } from "./common/useTextStyle";
+import { useContainerStyle } from "./common/useContainerStyle";
 
 type Item = ListUsers[number];
 
 export function GithubUserListItem({ item: { avatar_url, login } }: ListRenderItemInfo<Item>) {
-  const containerStyle = useContainerStyle(1);
-  const h2Style = useH2Style();
+  const containerStyle = useContainerStyle();
+  const h2Style = useTextStyle('h2');
 
   return (
     <Link href={route(Route.DescribeGithubUser, { login })} asChild>

@@ -5,9 +5,8 @@ import { useMemo } from "react";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import { List } from "react-native-paper";
 import { ErrorAlert } from "./common/ErrorAlert";
-import { useH1Style } from "./common/H1";
-import { useH4Style } from "./common/H4";
 import { GithubUserListItem } from "./GithubUserListItem";
+import { useTextStyle } from "./common/useTextStyle";
 
 type Item = ListUsers[number];
 
@@ -42,11 +41,11 @@ function renderItem(info: ListRenderItemInfo<Item>) {
 }
 
 function EmptyList() {
-  const h4Style = useH4Style();
+  const h4Style = useTextStyle('h4');
   return <List.Item title={t("GithubUserList.empty")} titleStyle={h4Style} />;
 }
 
 function ListHeader() {
-  const h1Style = useH1Style();
+  const h1Style = useTextStyle('h1');
   return <List.Item title={t("GithubUserList.title")} titleStyle={h1Style} />;
 }
