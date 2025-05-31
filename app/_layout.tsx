@@ -1,4 +1,5 @@
 import QueryClientProvider from "@/components/query/QueryClientProvider";
+import { t } from "@/i18n/t";
 import { Stack } from "expo-router";
 import React from "react";
 import { useColorScheme } from "react-native";
@@ -19,7 +20,15 @@ export default function RootLayout() {
       <SafeAreaProvider>
         <PaperProvider theme={paperTheme}>
           <QueryClientProvider>
-            <Stack />
+            <Stack screenOptions={(screen) => ({
+              headerStyle: { backgroundColor: paperTheme.colors.surface },
+              headerTintColor: paperTheme.colors.onSurface,
+              contentStyle: { backgroundColor: paperTheme.colors.surface },
+            })}>
+              <Stack.Screen name="index" options={{ title: t('ListGithubUsersScreen.title') }} />
+              <Stack.Screen name="search" options={{ title: t('SearchGithubUsersScreen.title') }} />
+              <Stack.Screen name="users/[login]" options={screen => ({ title: t('GithubUserDescriptionScreen.title', screen.route.params as never) })} />
+            </Stack>
           </QueryClientProvider>
         </PaperProvider>
       </SafeAreaProvider>

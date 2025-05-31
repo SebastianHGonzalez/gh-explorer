@@ -1,4 +1,7 @@
 {
+    "ListGithubUsersScreen.title": "Explorador GH",
+    "SearchGithubUsersScreen.title": "Buscar",
+    "GithubUserDescriptionScreen.title": "{login}",
     "SearchGithubUsersScreen.placeholder": "Buscar...",
     "GithubUserList.title": "Usuarios de Github",
     "GithubUserList.accessibilityLabel": "Una lista de usuarios Github",

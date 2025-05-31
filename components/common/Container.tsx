@@ -18,6 +18,7 @@ export function useContainerStyle(elevation: Elevation): ViewStyle {
   return {
     elevation: elevation,
     backgroundColor: theme.colors.elevation[`level${elevation}`],
+    borderColor: theme.colors.primaryContainer,
     borderRadius: theme.roundness,
     borderWidth: SIZE.xxs,
     padding: SIZE.sm,
