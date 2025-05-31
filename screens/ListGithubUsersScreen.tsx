@@ -1,9 +1,11 @@
 import { Screen } from "@/components/common/Screen";
 import { GithubUserList } from "@/components/GithubUserList";
+import { ErrorBoundary } from "@/components/common/ErrorBoundary";
 import { Route } from "@/utils/routes";
 import { Link } from "expo-router";
 import { Suspense } from "react";
 import { Searchbar } from "react-native-paper";
+import { ErrorAlert } from "@/components/common/ErrorAlert";
 
 export function ListGithubUsersScreen() {
   return (
@@ -12,9 +14,11 @@ export function ListGithubUsersScreen() {
         <Searchbar value="" placeholder="Search" focusable={false} />
       </Link>
 
-      <Suspense>
-        <GithubUserList />
-      </Suspense>
+      <ErrorBoundary renderFallback={error => <ErrorAlert error={error} />}>
+        <Suspense>
+          <GithubUserList />
+        </Suspense>
+      </ErrorBoundary>
     </Screen>
   );
 }

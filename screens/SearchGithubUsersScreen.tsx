@@ -2,12 +2,16 @@ import {
   SearchUsers, searchUsersQuery
 } from "@/apis/github/search/users";
 import { ErrorAlert } from "@/components/common/ErrorAlert";
+import { H4 } from "@/components/common/H4";
 import { Screen } from "@/components/common/Screen";
+import { useTextStyle } from "@/components/common/useTextStyle";
 import { GithubUserListItem } from "@/components/GithubUserListItem";
+import { t } from "@/i18n/t";
+import { FONT_WEIGHT, SIZE } from "@/styles/constants";
 import { useDebouncedValue } from "@tanstack/react-pacer/debouncer";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCallback, useMemo, useState } from "react";
-import { FlatList, ListRenderItemInfo } from "react-native";
+import { Text, FlatList, ListRenderItemInfo } from "react-native";
 import { Searchbar } from "react-native-paper";
 
 type Item = SearchUsers["items"][number];
@@ -34,23 +38,30 @@ export function SearchGithubUsersScreen() {
 
   return (
     <Screen>
+
       <Searchbar
         autoFocus
         placeholder="Search"
         onChangeText={onChangeSearch}
         value={q}
       />
+
       {search.error && <ErrorAlert error={search.error} />}
 
-      {isEnabled && (
-        <FlatList
-          data={results}
-          renderItem={renderItem}
-          keyExtractor={keyExtractor}
-          // StickyHeaderComponent={() => <>count: {total}</>}
-          stickyHeaderHiddenOnScroll
-        />
-      )}
+      <FlatList
+        data={results}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        ListHeaderComponent={search.isSuccess ? (
+          <H4 style={{ margin: SIZE.md }}>
+            {t('SearchGithubUsersScreen.listHeader', {
+              q: <Text style={{ fontStyle: 'italic', fontWeight: FONT_WEIGHT.light }}>{debouncedQ}</Text>,
+              count: search.data?.pages.at(-1)?.total_count.toString() ?? ''
+            })}
+          </H4>
+        ) : null}
+        onEndReached={() => { debugger; search.fetchNextPage() }}
+      />
     </Screen>
   );
 }

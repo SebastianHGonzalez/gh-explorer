@@ -1,4 +1,5 @@
 import { getLocales } from 'expo-localization';
+import { ReactNode } from 'react';
 
 export const DEFAULT_LANGUAGE = 'en';
 
@@ -15,16 +16,31 @@ function getTranslations(): Record<string, string> {
   return translationGetter();
 }
 
-export function t(key: string, params?: Record<string, string>): string {
+export function t(key: string, params?: Record<string, string | number>): string
+export function t(key: string, params?: Record<string, string | number | ReactNode>): ReactNode
+export function t(key: string, params?: Record<string, string | number | ReactNode>): string | ReactNode {
   const translation = getTranslations()[key];
   if (!translation) {
     console.warn(`Translation for key "${key}" not found.`);
     return key; // Fallback to the key itself if translation is missing
   }
+
   if (params) {
-    return Object.keys(params).reduce((result, paramKey) => {
-      return result.replace(`{${paramKey}}`, params[paramKey]);
+    const str = Object.keys(params).reduce((result, paramKey) => {
+      if (typeof params[paramKey] === 'string' || typeof params[paramKey] === 'number') {
+        return result.replace(`{${paramKey}}`, params[paramKey].toString());
+      }
+      return result;
     }, translation);
+
+    if (Object.values(params).some(p => typeof p === 'object')) {
+      return (
+        <>
+          {str.split(/[{}]/).map(strPart => params[strPart] || strPart)}
+        </>
+      )
+    }
   }
+
   return translation;
 }

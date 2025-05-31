@@ -1,5 +1,6 @@
-import { Text, ViewStyle } from "react-native"
-import { Container } from "./Container"
+import { ViewStyle } from "react-native";
+import { Container } from "./Container";
+import { P } from "./P";
 
 interface ErrorAlertProps {
     error: Error;
@@ -9,7 +10,7 @@ interface ErrorAlertProps {
 export function ErrorAlert({ error, style }: ErrorAlertProps) {
     return (
         <Container variant="error" elevation={5} style={style}>
-            <Text>{error.message}</Text>
+            <P>{error.message}</P>
         </Container>
     )
 }

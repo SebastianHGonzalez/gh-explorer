@@ -10,11 +10,13 @@ export function useScreenStyle(): ViewStyle {
   return {
     backgroundColor: theme.colors.elevation.level0,
     padding: SIZE.lg,
+    flex: 1,
   };
 }
 
 export function Screen({ style, children, ...props }: ScreenProps) {
   const containerStyle = useScreenStyle();
+
   return (
     <SafeAreaView {...props} style={StyleSheet.flatten([containerStyle, style])}>
         {children}
