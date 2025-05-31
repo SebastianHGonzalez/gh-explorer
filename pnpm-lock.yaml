@@ -8,6 +8,9 @@ patchedDependencies:
   '@tanstack/query-core@5.79.0':
     hash: ebcbfd462d7cf7931ebdbccb86314799267fb2cf36e8c7b15da26cc1ad2c5c22
     path: patches/@tanstack__query-core@5.79.0.patch
+  expo-router@5.0.7:
+    hash: 0735b598e4a0e674222e0c2b6bab401fe2ccb9677a5719debc0b616f17d89297
+    path: patches/expo-router@5.0.7.patch
 
 importers:
 
@@ -48,7 +51,7 @@ importers:
         version: 16.1.5(expo@53.0.9(@babel/core@7.27.4)(@expo/metro-runtime@5.0.4(react-native@0.79.2(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0)))(react-native@0.79.2(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0))(react@19.0.0)
       expo-router:
         specifier: ~5.0.7
-        version: 5.0.7(ccaa22ad9e0d9789fdaac6d3dcbfb15e)
+        version: 5.0.7(patch_hash=0735b598e4a0e674222e0c2b6bab401fe2ccb9677a5719debc0b616f17d89297)(ccaa22ad9e0d9789fdaac6d3dcbfb15e)
       expo-splash-screen:
         specifier: ~0.30.8
         version: 0.30.8(expo@53.0.9(@babel/core@7.27.4)(@expo/metro-runtime@5.0.4(react-native@0.79.2(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0)))(react-native@0.79.2(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0))
@@ -4815,7 +4818,7 @@ snapshots:
     dependencies:
       invariant: 2.2.4
 
-  expo-router@5.0.7(ccaa22ad9e0d9789fdaac6d3dcbfb15e):
+  expo-router@5.0.7(patch_hash=0735b598e4a0e674222e0c2b6bab401fe2ccb9677a5719debc0b616f17d89297)(ccaa22ad9e0d9789fdaac6d3dcbfb15e):
     dependencies:
       '@expo/metro-runtime': 5.0.4(react-native@0.79.2(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))
       '@expo/server': 0.6.2
