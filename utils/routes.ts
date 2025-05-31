@@ -1,5 +1,6 @@
 export enum Route {
   ListGithubUsers = "/",
+  SearchGithubUsers = "/search",
   DescribeGithubUser = "/users/[login]",
   NotFound = "/not-found",
 }

@@ -1,14 +1,20 @@
+import { Screen } from "@/components/common/Screen";
 import { GithubUserList } from "@/components/GithubUserList";
-import { ROOT } from "@/styles/constants";
+import { Route } from "@/utils/routes";
+import { Link } from "expo-router";
 import { Suspense } from "react";
-import { View } from "react-native";
+import { Searchbar } from "react-native-paper";
 
 export function ListGithubUsersScreen() {
   return (
-    <View style={ROOT}>
+    <Screen>
+      <Link href={Route.SearchGithubUsers} asChild>
+        <Searchbar value="" placeholder="Search" focusable={false} />
+      </Link>
+
       <Suspense>
         <GithubUserList />
       </Suspense>
-    </View>
+    </Screen>
   );
 }

@@ -1,10 +1,10 @@
-import { infiniteQueryOptions } from "@tanstack/react-query";
+import { InfiniteData, infiniteQueryOptions } from "@tanstack/react-query";
 import z from "zod";
 
 export function searchUsersQuery(input: SearchUsersInput) {
-  return infiniteQueryOptions({
+  return infiniteQueryOptions<SearchUsers, Error, InfiniteData<SearchUsers>, unknown[], number>({
     initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages, lastPageParam = 0) => lastPageParam + 1,
+    getNextPageParam: (lastPage, allPages, lastPageParam = 0) => lastPage.incomplete_results ? lastPageParam + 1 : null,
     queryKey: ["github", "search", "users", input],
     queryFn: async ({ pageParam }) => {
       // return DEBUG_FAKE_RESPONSE; // For debugging purposes, replace with actual API call in production

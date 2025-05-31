@@ -1,4 +1,5 @@
 {
+    "SearchGithubUsersScreen.placeholder": "Search...",
     "GithubUserList.title": "Github User List",
     "GithubUserList.accessibilityLabel": "A list of Github users",
     "GithubUserList.accessibilityHint": "A list of Github users"

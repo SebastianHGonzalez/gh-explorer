@@ -1,14 +1,13 @@
 import { ListUsers, listUsersQuery } from "@/apis/github/users";
 import { t } from "@/i18n/t";
-import { H1, H2, H4, SIZE, SURFACE } from "@/styles/constants";
-import { Route, route } from "@/utils/routes";
-import {
-    useSuspenseInfiniteQuery
-} from "@tanstack/react-query";
-import { Link } from "expo-router";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { FlatList, ListRenderItemInfo } from "react-native";
-import { Avatar, List } from "react-native-paper";
+import { List } from "react-native-paper";
+import { ErrorAlert } from "./common/ErrorAlert";
+import { useH1Style } from "./common/H1";
+import { useH4Style } from "./common/H4";
+import { GithubUserListItem } from "./GithubUserListItem";
 
 type Item = ListUsers[number];
 
@@ -20,50 +19,34 @@ export function GithubUserList() {
   );
 
   return (
-    <FlatList
-      data={users}
-      keyExtractor={keyExtractor}
-      renderItem={renderItem}
-      ListEmptyComponent={EmptyList}
-      ListHeaderComponent={ListHeader}
-    />
-  );
-}
+    <>
+      {query.error && <ErrorAlert error={query.error} />}
 
-function keyExtractor(item: { id: number }) {
-  return `${item.id}`;
-}
-
-function renderItem(props: ListRenderItemInfo<Item>) {
-  return <ListItem {...props} />;
-}
-
-function ListItem({ item: { avatar_url, login } }: ListRenderItemInfo<Item>) {
-  return (
-    <Link href={route(Route.DescribeGithubUser, { login })} asChild>
-      <List.Item
-        title={login}
-        titleStyle={H2}
-        left={() => (
-          <Avatar.Image size={SIZE.xxxl} source={{ uri: avatar_url }} />
-        )}
-        right={() => <List.Icon icon="chevron-right" />}
-        style={SURFACE}
-        titleNumberOfLines={1}
-        accessibilityRole="link"
-        accessibilityLabel={t("GithubUserList.accessibilityLabel", {
-          username: login,
-        })}
-        accessibilityHint={t("GithubUserList.accessibilityHint")}
+      <FlashList
+        data={users}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        ListEmptyComponent={EmptyList}
+        ListHeaderComponent={ListHeader}
       />
-    </Link>
+    </>
   );
+}
+
+function keyExtractor(item: Item) {
+  return item.login;
+}
+
+function renderItem(info: ListRenderItemInfo<Item>) {
+  return <GithubUserListItem {...info} />;
 }
 
 function EmptyList() {
-  return <List.Item title={t("GithubUserList.empty")} titleStyle={H4} />;
+  const h4Style = useH4Style();
+  return <List.Item title={t("GithubUserList.empty")} titleStyle={h4Style} />;
 }
 
 function ListHeader() {
-  return <List.Item title={t("GithubUserList.title")} titleStyle={H1} />;
+  const h1Style = useH1Style();
+  return <List.Item title={t("GithubUserList.title")} titleStyle={h1Style} />;
 }
