@@ -1,9 +1,9 @@
 import { describeUserQuery } from "@/apis/github/users/[login]";
-import { useAppNavigate } from "@/hooks/useAppNavigate";
 import { t } from "@/i18n/t";
-import { SIZE } from "@/styles/constants";
 import { AppRouteName } from "@/navigation/types";
+import { SIZE } from "@/styles/constants";
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useLinkProps } from "@react-navigation/native";
 import { ListRenderItemInfo } from "@shopify/flash-list";
 import { useQuery } from "@tanstack/react-query";
 import { StyleSheet } from "react-native";
@@ -19,7 +19,7 @@ type Item = {
   login: string,
 };
 
-export function GithubUserListItem({ item: { login, avatar_url }}: ListRenderItemInfo<Item>) {
+export function GithubUserListItem({ item: { login, avatar_url } }: ListRenderItemInfo<Item>) {
   const query = useQuery({ ...describeUserQuery(login), })
   const {
     name,
@@ -33,11 +33,14 @@ export function GithubUserListItem({ item: { login, avatar_url }}: ListRenderIte
 
   const containerStyle = useContainerStyle();
 
-  const navigate = useAppNavigate();
+  const linkProps = useLinkProps({
+    screen: AppRouteName.GithubUserDescriptionScreen,
+    params: { login },
+  });
 
   return (
       <List.Item
-      onPress={() => navigate(AppRouteName.GithubUserDescriptionScreen, { login })}
+      {...linkProps}
         title={<>
           <H2>{name || login}</H2>
           {name && login && <H3 style={{ fontStyle: 'italic', }}>{" - "}{name && login}</H3>}

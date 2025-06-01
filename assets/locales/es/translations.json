@@ -1,4 +1,7 @@
 {
+    "ListStackScreen.tab": "Inicio",
+    "SearchStackScreen.tab": "Busqueda",
+    "FavoritesStackScreen.tab": "Favoritos",
     "ListGithubUsersScreen.title": "Explorador GH",
     "SearchGithubUsersScreen.title": "Buscar",
     "SearchGithubUsersScreen.listHeader": "{count} resultados para: {q}",

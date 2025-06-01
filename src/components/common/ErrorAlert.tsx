@@ -14,3 +14,7 @@ export function ErrorAlert({ error, style }: ErrorAlertProps) {
         </Container>
     )
 }
+
+export function renderErrorAlert(error: Error) {
+    return <ErrorAlert error={error} />
+}
