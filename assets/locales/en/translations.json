@@ -4,6 +4,7 @@
     "FavoritesStackScreen.tab": "Favorites",
     "ListGithubUsersScreen.title": "GH Explorer",
     "SearchGithubUsersScreen.title": "Search",
+    "FavoritesScreen.title": "Favorites",
     "SearchGithubUsersScreen.listHeader": "{count} results for: {q}",
     "GithubUserDescriptionScreen.title": "{login}",
     "SearchGithubUsersScreen.placeholder": "Search...",

@@ -2,18 +2,19 @@ import {
   SearchUsers, SearchUsersInput, searchUsersQuery
 } from "@/apis/github/search/users";
 import { renderErrorAlert } from "@/components/common/ErrorAlert";
+import { ErrorBoundary } from "@/components/common/ErrorBoundary";
 import { H4 } from "@/components/common/H4";
 import { Screen } from "@/components/common/Screen";
 import { GithubUserListItem } from "@/components/GithubUserListItem";
 import { t } from "@/i18n/t";
 import { FONT_WEIGHT, SIZE } from "@/styles/constants";
+import { useFocusEffect } from "@react-navigation/native";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useDebouncedValue } from "@tanstack/react-pacer/debouncer";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
-import { Suspense, useCallback, useMemo, useState } from "react";
-import { Text } from "react-native";
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
+import { Suspense, useCallback, useMemo, useRef, useState } from "react";
+import { Text, TextInput } from "react-native";
 import { Searchbar } from "react-native-paper";
-import { ErrorBoundary } from "@/components/common/ErrorBoundary";
 
 type Item = SearchUsers["items"][number];
 
@@ -26,9 +27,20 @@ export function SearchGithubUsersScreen() {
     setSearchQuery(query);
   }, []);
 
+  const searchbarRef = useRef<TextInput>(null);
+  useFocusEffect(
+    useCallback(() => {
+      // Focus the searchbar when the screen is focused
+      setTimeout(() => {
+        searchbarRef.current?.focus?.();
+      }, 100);
+    }, [])
+  );
+
   return (
     <Screen>
       <Searchbar
+        ref={searchbarRef}
         autoFocus
         placeholder={t('SearchGithubUsersScreen.placeholder')}
         onChangeText={onChangeSearch}

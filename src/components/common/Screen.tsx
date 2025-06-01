@@ -9,7 +9,7 @@ export function useScreenStyle(): ViewStyle {
 
   return {
     backgroundColor: theme.colors.elevation.level0,
-    padding: SIZE.lg,
+    paddingHorizontal: SIZE.lg,
     flex: 1,
   };
 }

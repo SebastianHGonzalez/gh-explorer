@@ -1,7 +1,9 @@
 import { AppRouteName } from "@/navigation/types";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {
+  createNativeStackNavigator
+} from "@react-navigation/native-stack";
 import { ComponentProps } from "react";
 import { useTheme } from "react-native-paper";
 import { FavoritesScreen } from "./screens/FavoritesScreen";
@@ -18,10 +20,9 @@ function useStackOptions() {
     screenOptions: {
       headerStyle: { backgroundColor: theme.colors.surface },
       headerTintColor: theme.colors.onSurface,
-      sceneStyle: { backgroundColor: theme.colors.surface },
       contentStyle: { backgroundColor: theme.colors.surface },
     },
-  };
+  } as const;
 }
 
 const ListStack = createNativeStackNavigator();
@@ -36,10 +37,12 @@ function ListStackScreen() {
       <ListStack.Screen
         name={AppRouteName.ListGithubUsersScreen}
         component={ListGithubUsersScreen}
+        options={{ title: t("ListGithubUsersScreen.title") }}
       />
       <ListStack.Screen
         name={AppRouteName.GithubUserDescriptionScreen}
         component={GithubUserDescriptionScreen as never}
+        options={{ title: t("GithubUserDescriptionScreen.title") }}
       />
     </ListStack.Navigator>
   );
@@ -57,10 +60,12 @@ function SearchStackScreen() {
       <SearchStack.Screen
         name={AppRouteName.SearchGithubUsersScreen}
         component={SearchGithubUsersScreen}
+        options={{ title: t("SearchGithubUsersScreen.title") }}
       />
       <SearchStack.Screen
         name={AppRouteName.GithubUserDescriptionScreen}
         component={GithubUserDescriptionScreen as never}
+        options={{ title: t("GithubUserDescriptionScreen.title") }}
       />
     </SearchStack.Navigator>
   );
@@ -78,10 +83,12 @@ function FavoritesStackScreen() {
       <FavoritesStack.Screen
         name={AppRouteName.FavoritesScreen}
         component={FavoritesScreen}
+        options={{ title: t("FavoritesScreen.title") }}
       />
       <FavoritesStack.Screen
         name={AppRouteName.GithubUserDescriptionScreen}
         component={GithubUserDescriptionScreen as never}
+        options={{ title: t("GithubUserDescriptionScreen.title") }}
       />
     </FavoritesStack.Navigator>
   );
@@ -106,13 +113,13 @@ function TabsStack() {
           borderColor: theme.colors.onSurface,
         },
         tabBarLabelStyle: theme.fonts.labelSmall,
-        animation: 'shift',
+        animation: "shift",
         transitionSpec: {
           animation: "timing",
           config: {
-            duration: 100
-          }
-        }
+            duration: 100,
+          },
+        },
       }}
     >
       <Tab.Screen
@@ -120,7 +127,7 @@ function TabsStack() {
         component={ListStackScreen}
         options={{
           headerShown: false,
-          tabBarLabel: t('ListStackScreen.tab'),
+          tabBarLabel: t("ListStackScreen.tab"),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="people-outline" color={color} size={size} />
           ),
@@ -131,15 +138,10 @@ function TabsStack() {
         component={SearchStackScreen}
         options={{
           headerShown: false,
-          tabBarLabel: t('SearchStackScreen.tab'),
+          tabBarLabel: t("SearchStackScreen.tab"),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="search-outline" color={color} size={size} />
           ),
-          tabBarStyle: {
-          // tabBarIconStyle: {
-            backgroundColor: theme.colors.primary
-          
-          }
         }}
       />
       <Tab.Screen
@@ -147,7 +149,7 @@ function TabsStack() {
         component={FavoritesStackScreen}
         options={{
           headerShown: false,
-          tabBarLabel: t('FavoritesStackScreen.tab'),
+          tabBarLabel: t("FavoritesStackScreen.tab"),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="star-outline" color={color} size={size} />
           ),

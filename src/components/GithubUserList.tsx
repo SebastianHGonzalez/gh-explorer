@@ -26,7 +26,6 @@ export function GithubUserList() {
         keyExtractor={keyExtractor}
         renderItem={renderItem}
         ListEmptyComponent={EmptyList}
-        ListHeaderComponent={ListHeader}
       />
     </>
   );
@@ -43,9 +42,4 @@ function renderItem(info: ListRenderItemInfo<Item>) {
 function EmptyList() {
   const h4Style = useTextStyle('h4');
   return <List.Item title={t("GithubUserList.empty")} titleStyle={h4Style} />;
-}
-
-function ListHeader() {
-  const h1Style = useTextStyle('h1');
-  return <List.Item title={t("GithubUserList.title")} titleStyle={h1Style} />;
 }
