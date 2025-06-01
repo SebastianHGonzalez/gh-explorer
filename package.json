@@ -7,11 +7,13 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "deploy": "npx expo export -p web && npx eas-cli@latest deploy"
+    "deploy": "npx expo export -p web && npx eas-cli@latest deploy",
+    "lint": "expo lint"
   },
   "dependencies": {
     "@expo-google-fonts/roboto": "^0.4.0",
     "@expo/metro-runtime": "~5.0.4",
+    "@expo/vector-icons": "^14.1.0",
     "@react-native-async-storage/async-storage": "^2.1.2",
     "@react-navigation/bottom-tabs": "^7.3.14",
     "@react-navigation/elements": "^2.4.3",
@@ -48,6 +50,9 @@
   "devDependencies": {
     "@babel/core": "^7.27.4",
     "@types/react": "~19.1.6",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.4.1",
+    "prettier": "^3.5.3",
     "typescript": "^5.8.3"
   },
   "private": true
