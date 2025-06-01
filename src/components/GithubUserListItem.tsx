@@ -2,7 +2,7 @@ import { describeUserQuery } from "@/apis/github/users/[login]";
 import { useAppNavigate } from "@/hooks/useAppNavigate";
 import { t } from "@/i18n/t";
 import { SIZE } from "@/styles/constants";
-import { RouteName } from "@/utils/routes";
+import { AppRouteName } from "@/navigation/types";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { ListRenderItemInfo } from "@shopify/flash-list";
 import { useQuery } from "@tanstack/react-query";
@@ -37,7 +37,7 @@ export function GithubUserListItem({ item: { login, avatar_url }}: ListRenderIte
 
   return (
       <List.Item
-      onPress={() => navigate(RouteName.GithubUserDescriptionScreen, { login })}
+      onPress={() => navigate(AppRouteName.GithubUserDescriptionScreen, { login })}
         title={<>
           <H2>{name || login}</H2>
           {name && login && <H3 style={{ fontStyle: 'italic', }}>{" - "}{name && login}</H3>}

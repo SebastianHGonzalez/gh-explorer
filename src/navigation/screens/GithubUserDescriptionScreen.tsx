@@ -2,24 +2,28 @@ import { describeUserQuery } from "@/apis/github/users/[login]";
 import { H1 } from "@/components/common/H1";
 import { P } from "@/components/common/P";
 import { Screen } from "@/components/common/Screen";
+import { AppRouteName, ListStackParamList } from "@/navigation/types";
 import { SIZE } from "@/styles/constants";
-import { AppRoute, RouteName } from "@/utils/routes";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useQuery } from "@tanstack/react-query";
 import { View } from "react-native";
 import { Avatar, useTheme } from "react-native-paper";
 
-export function GithubUserDescriptionScreen({ route }: { route: AppRoute<RouteName.GithubUserDescriptionScreen> }) {
+type Props = NativeStackScreenProps<ListStackParamList, AppRouteName.GithubUserDescriptionScreen>;
+
+export function GithubUserDescriptionScreen({ route }: Props) {
   const { login } = route.params
   const query = useQuery(describeUserQuery(login));
   const user = query.data;
-const theme = useTheme();
+  const theme = useTheme();
+
   return (
     <Screen>
       <View style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Avatar.Image size={250} source={{ uri: user?.avatar_url }} />
         <H1 style={{ margin: SIZE.xxl }}>{user?.name}</H1>
       </View>
-      <P>{ JSON.stringify(theme.fonts, undefined, 2)}</P>
+      <P>{JSON.stringify(theme.fonts, undefined, 2)}</P>
       <P>bio: {user?.bio}</P>
       <P>location: {user?.location}</P>
       <P>company: {user?.company}</P>

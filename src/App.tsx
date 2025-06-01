@@ -1,6 +1,5 @@
 import { Roboto_400Regular, Roboto_600SemiBold, Roboto_700Bold, useFonts } from '@expo-google-fonts/roboto';
 import { Assets as NavigationAssets } from '@react-navigation/elements';
-import { NavigationContainer } from '@react-navigation/native';
 import { Asset } from 'expo-asset';
 import { hideAsync, preventAutoHideAsync } from 'expo-splash-screen';
 import React from 'react';
@@ -9,7 +8,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { MD3DarkTheme, MD3LightTheme, PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import QueryClientProvider from "./components/query/QueryClientProvider";
-import { RootStack } from './navigation';
+import { AppNavigationContainer, RootStack } from './navigation';
 import { FONT_WEIGHT } from './styles/constants';
 
 Asset.loadAsync([
@@ -41,18 +40,12 @@ export function App() {
       <SafeAreaProvider>
         <PaperProvider theme={paperTheme}>
           <QueryClientProvider>
-            <NavigationContainer
-              linking={{
-                prefixes: [
-                  // Change the scheme to match your app's scheme defined in app.json
-                  'helloworld://',
-                ],
-              }}
+            <AppNavigationContainer
               onReady={() => {
                 hideAsync();
               }}>
               <RootStack />
-            </NavigationContainer>
+            </AppNavigationContainer>
           </QueryClientProvider>
         </PaperProvider>
       </SafeAreaProvider>
