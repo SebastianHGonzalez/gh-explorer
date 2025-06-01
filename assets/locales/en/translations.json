@@ -2,6 +2,7 @@
     "ListStackScreen.tab": "Home",
     "SearchStackScreen.tab": "Search",
     "FavoritesStackScreen.tab": "Favorites",
+    "GithubUserList.empty": "No results",
     "ListGithubUsersScreen.title": "GH Explorer",
     "SearchGithubUsersScreen.title": "Search",
     "FavoritesScreen.title": "Favorites",

@@ -1,6 +1,6 @@
 import { ListUsers, listUsersQuery } from "@/apis/github/users";
 import { t } from "@/i18n/t";
-import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { List } from "react-native-paper";
@@ -11,7 +11,7 @@ import { useTextStyle } from "./common/useTextStyle";
 type Item = ListUsers[number];
 
 export function GithubUserList() {
-  const query = useSuspenseInfiniteQuery(listUsersQuery());
+  const query = useInfiniteQuery(listUsersQuery());
   const users = useMemo(
     () => query.data?.pages?.flat() || [],
     [query.data?.pages]
@@ -26,6 +26,7 @@ export function GithubUserList() {
         keyExtractor={keyExtractor}
         renderItem={renderItem}
         ListEmptyComponent={EmptyList}
+        estimatedItemSize={200}
       />
     </>
   );

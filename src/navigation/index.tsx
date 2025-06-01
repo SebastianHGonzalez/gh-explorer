@@ -1,15 +1,15 @@
+import { t } from "@/i18n/t";
 import { AppRouteName } from "@/navigation/types";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ComponentProps } from "react";
 import { useTheme } from "react-native-paper";
+import { createAppStack } from "./createAppStack";
 import { FavoritesScreen } from "./screens/FavoritesScreen";
 import { GithubUserDescriptionScreen } from "./screens/GithubUserDescriptionScreen";
 import { ListGithubUsersScreen } from "./screens/ListGithubUsersScreen";
 import { SearchGithubUsersScreen } from "./screens/SearchGithubUsersScreen";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { t } from "@/i18n/t";
 
 function useStackOptions() {
   const theme = useTheme();
@@ -22,7 +22,8 @@ function useStackOptions() {
         borderBottomWidth: 1,
       },
       headerTintColor: theme.colors.onSurface,
-      contentStyle: { backgroundColor: theme.colors.surface },
+      contentStyle: { backgroundColor: theme.colors.surface }, // Web 
+      cardStyle: { backgroundColor: theme.colors.surface }, // Native
       animation: "fade_from_bottom",
       animationDuration: 100,
       animationMatchesGesture: true,
@@ -33,7 +34,7 @@ function useStackOptions() {
   } as const;
 }
 
-const ListStack = createNativeStackNavigator();
+const ListStack = createAppStack();
 function ListStackScreen() {
   const props = useStackOptions();
 
@@ -58,7 +59,7 @@ function ListStackScreen() {
   );
 }
 
-const SearchStack = createNativeStackNavigator();
+const SearchStack = createAppStack();
 function SearchStackScreen() {
   const props = useStackOptions();
 
@@ -83,7 +84,7 @@ function SearchStackScreen() {
   );
 }
 
-const FavoritesStack = createNativeStackNavigator();
+const FavoritesStack = createAppStack();
 function FavoritesStackScreen() {
   const props = useStackOptions();
 
@@ -114,7 +115,7 @@ function TabsStack() {
 
   return (
     <Tab.Navigator
-      initialRouteName={AppRouteName.ListGithubUsersScreen}
+      initialRouteName={AppRouteName.ListGithubUsersTabScreen}
       screenOptions={{
         sceneStyle: { backgroundColor: theme.colors.surface },
         tabBarActiveTintColor: theme.colors.primary,
@@ -134,7 +135,7 @@ function TabsStack() {
       }}
     >
       <Tab.Screen
-        name={AppRouteName.ListGithubUsersScreen}
+        name={AppRouteName.ListGithubUsersTabScreen}
         component={ListStackScreen}
         options={{
           headerShown: false,
@@ -145,7 +146,7 @@ function TabsStack() {
         }}
       />
       <Tab.Screen
-        name={AppRouteName.SearchGithubUsersScreen}
+        name={AppRouteName.SearchGithubUsersTabScreen}
         component={SearchStackScreen}
         options={{
           headerShown: false,
@@ -156,7 +157,7 @@ function TabsStack() {
         }}
       />
       <Tab.Screen
-        name={AppRouteName.FavoritesScreen}
+        name={AppRouteName.FavoritesTabScreen}
         component={FavoritesStackScreen}
         options={{
           headerShown: false,
@@ -170,7 +171,7 @@ function TabsStack() {
   );
 }
 
-const Stack = createNativeStackNavigator();
+const Stack = createAppStack();
 export function RootStack() {
   const props = useStackOptions();
 
@@ -199,21 +200,21 @@ const linking = {
       [AppRouteName.Tabs]: {
         path: "",
         screens: {
-          [AppRouteName.ListGithubUsersScreen]: {
+          [AppRouteName.ListGithubUsersTabScreen]: {
             path: "",
             screens: {
               [AppRouteName.ListGithubUsersScreen]: "",
               [AppRouteName.GithubUserDescriptionScreen]: "users/:login",
             },
           },
-          [AppRouteName.SearchGithubUsersScreen]: {
+          [AppRouteName.SearchGithubUsersTabScreen]: {
             path: "search",
             screens: {
               [AppRouteName.SearchGithubUsersScreen]: "",
               [AppRouteName.GithubUserDescriptionScreen]: "users/:login",
             },
           },
-          [AppRouteName.FavoritesScreen]: {
+          [AppRouteName.FavoritesTabScreen]: {
             path: "favorites",
             screens: {
               [AppRouteName.FavoritesScreen]: "",

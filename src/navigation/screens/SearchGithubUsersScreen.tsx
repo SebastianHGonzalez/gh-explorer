@@ -1,5 +1,7 @@
 import {
-  SearchUsers, SearchUsersInput, searchUsersQuery
+  SearchUsers,
+  SearchUsersInput,
+  searchUsersQuery,
 } from "@/apis/github/search/users";
 import { renderErrorAlert } from "@/components/common/ErrorAlert";
 import { ErrorBoundary } from "@/components/common/ErrorBoundary";
@@ -11,8 +13,14 @@ import { FONT_WEIGHT, SIZE } from "@/styles/constants";
 import { useFocusEffect } from "@react-navigation/native";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useDebouncedValue } from "@tanstack/react-pacer/debouncer";
-import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
-import { Suspense, useCallback, useMemo, useRef, useState } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import {
+  Suspense,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Text, TextInput } from "react-native";
 import { Searchbar } from "react-native-paper";
 
@@ -34,7 +42,7 @@ export function SearchGithubUsersScreen() {
       setTimeout(() => {
         searchbarRef.current?.focus?.();
       }, 100);
-    }, [])
+    }, []),
   );
 
   return (
@@ -42,9 +50,10 @@ export function SearchGithubUsersScreen() {
       <Searchbar
         ref={searchbarRef}
         autoFocus
-        placeholder={t('SearchGithubUsersScreen.placeholder')}
+        placeholder={t("SearchGithubUsersScreen.placeholder")}
         onChangeText={onChangeSearch}
         value={q}
+        style={{ marginVertical: SIZE.md }}
       />
 
       {debouncedQ.length > 3 && (
@@ -59,10 +68,10 @@ export function SearchGithubUsersScreen() {
 }
 
 function SearchResults(props: SearchUsersInput) {
-  const search = useSuspenseInfiniteQuery(searchUsersQuery(props));
+  const search = useInfiniteQuery(searchUsersQuery(props));
   const results = useMemo(
     () => search.data?.pages.flatMap((page) => page.items) ?? [],
-    [search.data?.pages]
+    [search.data?.pages],
   );
 
   return (
@@ -70,17 +79,28 @@ function SearchResults(props: SearchUsersInput) {
       data={results}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
-      ListHeaderComponent={search.isSuccess ? (
-        <H4 style={{ margin: SIZE.md }}>
-          {t('SearchGithubUsersScreen.listHeader', {
-            q: <Text style={{ fontStyle: 'italic', fontWeight: FONT_WEIGHT.light }}>{props.q}</Text>,
-            count: search.data?.pages.at(-1)?.total_count.toString() ?? ''
-          })}
-        </H4>
-      ) : null}
-      onEndReached={() => { debugger; search.fetchNextPage() }}
+      ListHeaderComponent={
+        search.isSuccess ? (
+          <H4 style={{ margin: SIZE.md }}>
+            {t("SearchGithubUsersScreen.listHeader", {
+              q: (
+                <Text
+                  style={{ fontStyle: "italic", fontWeight: FONT_WEIGHT.light }}
+                >
+                  {props.q}
+                </Text>
+              ),
+              count: search.data?.pages.at(-1)?.total_count.toString() ?? "",
+            })}
+          </H4>
+        ) : null
+      }
+      onEndReached={() => {
+        search.fetchNextPage();
+      }}
+      estimatedItemSize={200}
     />
-  )
+  );
 }
 
 function keyExtractor(item: Item) {

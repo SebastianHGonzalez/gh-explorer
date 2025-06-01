@@ -3,7 +3,10 @@ import { NavigatorScreenParams, Route } from "@react-navigation/native";
 export type AppRoute<R extends AppRouteName> = Route<R, AppScreenParams<R>>;
 
 export enum AppRouteName {
-  Tabs = '(tabs)',
+  Tabs = "(tabs)",
+  ListGithubUsersTabScreen = "ListGithubUsersTabScreen",
+  SearchGithubUsersTabScreen = "SearchGithubUsersTabScreen",
+  FavoritesTabScreen = "FavoritesTabScreen",
   ListGithubUsersScreen = "ListGithubUsersScreen",
   SearchGithubUsersScreen = "SearchGithubUsersScreen",
   FavoritesScreen = "FavoritesScreen",
@@ -14,26 +17,36 @@ type ScreenParams = {
   [AppRouteName.GithubUserDescriptionScreen]: { login: string };
 };
 
-export type AppScreenParams<R extends AppRouteName> = R extends keyof ScreenParams ? ScreenParams[R] : undefined;
+export type AppScreenParams<R extends AppRouteName> =
+  R extends keyof ScreenParams ? ScreenParams[R] : undefined;
 
 export type ListStackParamList = {
-  ListGithubUsersScreen: undefined;
-  GithubUserDescriptionScreen: { login: string };
+  [AppRouteName.ListGithubUsersScreen]: undefined;
+  [AppRouteName.GithubUserDescriptionScreen]: {
+    login: string;
+    avatar_url?: string;
+  };
 };
 
 export type SearchStackParamList = {
-  SearchGithubUsersScreen: undefined;
-  GithubUserDescriptionScreen: { login: string };
+  [AppRouteName.SearchGithubUsersScreen]: undefined;
+  [AppRouteName.GithubUserDescriptionScreen]: {
+    login: string;
+    avatar_url?: string;
+  };
 };
 
 export type FavoritesStackParamList = {
-  FavoritesScreen: undefined;
-  GithubUserDescriptionScreen: { login: string };
+  [AppRouteName.FavoritesScreen]: undefined;
+  [AppRouteName.GithubUserDescriptionScreen]: {
+    login: string;
+    avatar_url?: string;
+  };
 };
 
 export type AppParamList = {
-  Tabs: undefined;
-  ListGithubUsersScreen: NavigatorScreenParams<ListStackParamList>;
-  SearchGithubUsersScreen: NavigatorScreenParams<SearchStackParamList>;
-  FavoritesScreen: NavigatorScreenParams<FavoritesStackParamList>;
+  [AppRouteName.Tabs]: undefined;
+  [AppRouteName.ListGithubUsersTabScreen]: NavigatorScreenParams<ListStackParamList>;
+  [AppRouteName.SearchGithubUsersTabScreen]: NavigatorScreenParams<SearchStackParamList>;
+  [AppRouteName.FavoritesTabScreen]: NavigatorScreenParams<FavoritesStackParamList>;
 };

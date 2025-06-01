@@ -37,6 +37,9 @@ importers:
       '@react-navigation/native-stack':
         specifier: ^7.3.14
         version: 7.3.14(@react-navigation/native@7.1.10(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0))(react-native-safe-area-context@5.3.0(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0))(react-native-screens@4.10.0(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0))(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0)
+      '@react-navigation/stack':
+        specifier: ^7.3.3
+        version: 7.3.3(@react-navigation/native@7.1.10(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0))(react-native-gesture-handler@2.24.0(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0))(react-native-safe-area-context@5.3.0(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0))(react-native-screens@4.10.0(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0))(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0)
       '@shopify/flash-list':
         specifier: ^1.8.2
         version: 1.8.2(@babel/runtime@7.27.4)(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0)
@@ -112,6 +115,9 @@ importers:
       react-native-web:
         specifier: ^0.20.0
         version: 0.20.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      react-navigation-shared-element:
+        specifier: ^3.1.3
+        version: 3.1.3(react-native-shared-element@0.8.9)(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0)
       react-query-kit:
         specifier: ^3.3.1
         version: 3.3.1(@tanstack/react-query@5.79.0(react@19.0.0))
@@ -130,7 +136,7 @@ importers:
         version: 10.1.5(eslint@9.28.0)
       eslint-plugin-prettier:
         specifier: ^5.4.1
-        version: 5.4.1(eslint-config-prettier@10.1.5(eslint@9.28.0))(eslint@9.28.0)(prettier@3.5.3)
+        version: 5.4.1(@types/eslint@9.6.1)(eslint-config-prettier@10.1.5(eslint@9.28.0))(eslint@9.28.0)(prettier@3.5.3)
       prettier:
         specifier: ^3.5.3
         version: 3.5.3
@@ -987,6 +993,16 @@ packages:
   '@react-navigation/routers@7.4.0':
     resolution: {integrity: sha512-th5THnuWKJlmr7GGHiicy979di11ycDWub9iIXbEDvQwmwmsRzppmVbfs2nD8bC/MgyMgqWu/gxfys+HqN+kcw==}
 
+  '@react-navigation/stack@7.3.3':
+    resolution: {integrity: sha512-TIUiQKSFYjVwRAT5pFn1jIk4aqPMgeh5eTXzsxgnAxrqrmE9E1o1XaZj+aeqBhTeBKxPTaRSjzsayD2/cue0mA==}
+    peerDependencies:
+      '@react-navigation/native': ^7.1.10
+      react: '>= 18.2.0'
+      react-native: '*'
+      react-native-gesture-handler: '>= 2.0.0'
+      react-native-safe-area-context: '>= 4.0.0'
+      react-native-screens: '>= 4.0.0'
+
   '@shopify/flash-list@1.8.2':
     resolution: {integrity: sha512-CJRkaMkwbDJtOyO9RgjXIXDKgIpgXPt2fncK7zcNvTPbvZHWnXcnS7Avl+TzAtvpPThV+fl3oxjnOYpszMil2A==}
     peerDependencies:
@@ -1048,6 +1064,9 @@ packages:
 
   '@types/babel__traverse@7.20.7':
     resolution: {integrity: sha512-dkO5fhS7+/oos4ciWxyEyjWe48zmG6wbCheo/G2ZnHx4fs3EU6YC6UM8rk56gAjNJ9P3MTH2jo5jb92/K6wbng==}
+
+  '@types/eslint@9.6.1':
+    resolution: {integrity: sha512-FXx2pKgId/WyYo2jXw63kk7/+TY7u7AziEJxJAnSFzHlqTAS3Ync6SvgYAN/k4/PQpnnVuzoMuVnByKK2qp0ag==}
 
   '@types/estree@1.0.7':
     resolution: {integrity: sha512-w28IoSUCJpidD/TGviZwwMJckNESJZXFu7NBZ5YJ4mEUnNraUn9Pm8HSZm/jDF1pDWYKspWE7oVphigUPRakIQ==}
@@ -2674,6 +2693,9 @@ packages:
       react: '*'
       react-native: '*'
 
+  react-native-shared-element@0.8.9:
+    resolution: {integrity: sha512-vlzhv3amkJm+8gA0WSeLzcCKNtN/ypZbic3IZ4Bwwr6GeWDrYzZ6k7PdHCioy7fwIVOJ1X9Pi/aYF9HK4Kb0qg==}
+
   react-native-web@0.20.0:
     resolution: {integrity: sha512-OOSgrw+aON6R3hRosCau/xVxdLzbjEcsLysYedka0ZON4ZZe6n9xgeN9ZkoejhARM36oTlUgHIQqxGutEJ9Wxg==}
     peerDependencies:
@@ -2690,6 +2712,13 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
+
+  react-navigation-shared-element@3.1.3:
+    resolution: {integrity: sha512-U1BZp7dEdcTNHggfkq3WEBlJeg4HwFhFdj7a0i0Uql/7mg2IHQg/bZaqM2jQvJITkABge6Hz5fZixIF8jyzpkg==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+      react-native-shared-element: '*'
 
   react-query-kit@3.3.1:
     resolution: {integrity: sha512-7eMfpqm+vHiHSTKMye08I7xuNwCnJfeehtMLJvrL/caS/41qSOG25jD3UP255eg8De1eU/KDeAq3jDnAMIBE8Q==}
@@ -4486,6 +4515,19 @@ snapshots:
     dependencies:
       nanoid: 3.3.11
 
+  '@react-navigation/stack@7.3.3(@react-navigation/native@7.1.10(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0))(react-native-gesture-handler@2.24.0(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0))(react-native-safe-area-context@5.3.0(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0))(react-native-screens@4.10.0(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0))(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@react-navigation/elements': 2.4.3(@react-navigation/native@7.1.10(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0))(react-native-safe-area-context@5.3.0(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0))(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0)
+      '@react-navigation/native': 7.1.10(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0)
+      color: 4.2.3
+      react: 19.0.0
+      react-native: 0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0)
+      react-native-gesture-handler: 2.24.0(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0)
+      react-native-safe-area-context: 5.3.0(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0)
+      react-native-screens: 4.10.0(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0)
+    transitivePeerDependencies:
+      - '@react-native-masked-view/masked-view'
+
   '@shopify/flash-list@1.8.2(@babel/runtime@7.27.4)(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@babel/runtime': 7.27.4
@@ -4558,6 +4600,12 @@ snapshots:
   '@types/babel__traverse@7.20.7':
     dependencies:
       '@babel/types': 7.27.3
+
+  '@types/eslint@9.6.1':
+    dependencies:
+      '@types/estree': 1.0.7
+      '@types/json-schema': 7.0.15
+    optional: true
 
   '@types/estree@1.0.7': {}
 
@@ -5098,13 +5146,14 @@ snapshots:
     dependencies:
       eslint: 9.28.0
 
-  eslint-plugin-prettier@5.4.1(eslint-config-prettier@10.1.5(eslint@9.28.0))(eslint@9.28.0)(prettier@3.5.3):
+  eslint-plugin-prettier@5.4.1(@types/eslint@9.6.1)(eslint-config-prettier@10.1.5(eslint@9.28.0))(eslint@9.28.0)(prettier@3.5.3):
     dependencies:
       eslint: 9.28.0
       prettier: 3.5.3
       prettier-linter-helpers: 1.0.0
       synckit: 0.11.8
     optionalDependencies:
+      '@types/eslint': 9.6.1
       eslint-config-prettier: 10.1.5(eslint@9.28.0)
 
   eslint-scope@8.3.0:
@@ -6319,6 +6368,8 @@ snapshots:
       react-native: 0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0)
       warn-once: 0.1.1
 
+  react-native-shared-element@0.8.9: {}
+
   react-native-web@0.20.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       '@babel/runtime': 7.27.4
@@ -6381,6 +6432,13 @@ snapshots:
       - bufferutil
       - supports-color
       - utf-8-validate
+
+  react-navigation-shared-element@3.1.3(react-native-shared-element@0.8.9)(react-native@0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0))(react@19.0.0):
+    dependencies:
+      hoist-non-react-statics: 3.3.2
+      react: 19.0.0
+      react-native: 0.79.1(@babel/core@7.27.4)(@types/react@19.1.6)(react@19.0.0)
+      react-native-shared-element: 0.8.9
 
   react-query-kit@3.3.1(@tanstack/react-query@5.79.0(react@19.0.0)):
     optionalDependencies:
