@@ -1,9 +1,7 @@
 import { AppRouteName } from "@/navigation/types";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import {
-  createNativeStackNavigator
-} from "@react-navigation/native-stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ComponentProps } from "react";
 import { useTheme } from "react-native-paper";
 import { FavoritesScreen } from "./screens/FavoritesScreen";
@@ -18,9 +16,19 @@ function useStackOptions() {
 
   return {
     screenOptions: {
-      headerStyle: { backgroundColor: theme.colors.surface },
+      headerStyle: {
+        backgroundColor: theme.colors.surface,
+        borderBottomColor: theme.colors.onSurface,
+        borderBottomWidth: 1,
+      },
       headerTintColor: theme.colors.onSurface,
       contentStyle: { backgroundColor: theme.colors.surface },
+      animation: "fade_from_bottom",
+      animationDuration: 100,
+      animationMatchesGesture: true,
+      gestureEnabled: true,
+      gestureDirection: "vertical",
+      fullScreenGestureEnabled: true,
     },
   } as const;
 }
@@ -42,7 +50,9 @@ function ListStackScreen() {
       <ListStack.Screen
         name={AppRouteName.GithubUserDescriptionScreen}
         component={GithubUserDescriptionScreen as never}
-        options={{ title: t("GithubUserDescriptionScreen.title") }}
+        options={({ route: { params } }) => ({
+          title: t("GithubUserDescriptionScreen.title", params as never),
+        })}
       />
     </ListStack.Navigator>
   );
@@ -65,7 +75,9 @@ function SearchStackScreen() {
       <SearchStack.Screen
         name={AppRouteName.GithubUserDescriptionScreen}
         component={GithubUserDescriptionScreen as never}
-        options={{ title: t("GithubUserDescriptionScreen.title") }}
+        options={({ route: { params } }) => ({
+          title: t("GithubUserDescriptionScreen.title", params as never),
+        })}
       />
     </SearchStack.Navigator>
   );
@@ -88,7 +100,9 @@ function FavoritesStackScreen() {
       <FavoritesStack.Screen
         name={AppRouteName.GithubUserDescriptionScreen}
         component={GithubUserDescriptionScreen as never}
-        options={{ title: t("GithubUserDescriptionScreen.title") }}
+        options={({ route: { params } }) => ({
+          title: t("GithubUserDescriptionScreen.title", params as never),
+        })}
       />
     </FavoritesStack.Navigator>
   );
@@ -102,10 +116,7 @@ function TabsStack() {
     <Tab.Navigator
       initialRouteName={AppRouteName.ListGithubUsersScreen}
       screenOptions={{
-        headerStyle: { backgroundColor: theme.colors.surface },
-        headerTintColor: theme.colors.onSurface,
         sceneStyle: { backgroundColor: theme.colors.surface },
-        headerShown: false,
         tabBarActiveTintColor: theme.colors.primary,
         tabBarInactiveTintColor: theme.colors.onSurface,
         tabBarStyle: {
