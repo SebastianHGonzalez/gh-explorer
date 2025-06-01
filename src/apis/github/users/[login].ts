@@ -6,7 +6,7 @@ export function describeUserQuery(login: string | undefined) {
     enabled: !!login,
     queryKey: ["github", "user", login],
     queryFn: async () => {
-      return DEBUG_FAKE_RESPONSE; // For debugging purposes, replace with actual API call in production
+      // return DEBUG_FAKE_RESPONSE; // For debugging purposes, replace with actual API call in production
 
       const response = await fetch(`https://api.github.com/users/${login}`);
       if (!response.ok) {

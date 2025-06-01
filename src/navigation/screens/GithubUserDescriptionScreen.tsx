@@ -1,16 +1,23 @@
 import { describeUserQuery } from "@/apis/github/users/[login]";
+import { AppExternalLink } from "@/components/common/AppExternalLink";
+import { AppIcon } from "@/components/common/AppIcon";
 import { AppSharedElement } from "@/components/common/AppSharedElement";
 import { renderErrorAlert } from "@/components/common/ErrorAlert";
 import { ErrorBoundary } from "@/components/common/ErrorBoundary";
 import { H1 } from "@/components/common/H1";
+import { H2 } from "@/components/common/H2";
+import { P } from "@/components/common/P";
 import { Screen } from "@/components/common/Screen";
+import { SpaceBetween } from "@/components/common/SpaceBetween";
+import { Stat } from "@/components/common/Stat";
+import { t } from "@/i18n/t";
 import { AppRouteName, ListStackParamList } from "@/navigation/types";
 import { SIZE } from "@/styles/constants";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useQuery } from "@tanstack/react-query";
-import { Suspense } from "react";
-import { View } from "react-native";
-import { Avatar } from "react-native-paper";
+import { PropsWithChildren, Suspense } from "react";
+import { StyleSheet, View } from "react-native";
+import { Avatar, useTheme } from "react-native-paper";
 
 type Props = NativeStackScreenProps<
   ListStackParamList,
@@ -21,42 +28,16 @@ export function GithubUserDescriptionScreen({ route }: Props) {
   const { login, avatar_url } = route.params;
 
   return (
-    <Screen>
-      <Suspense>
-        <ErrorBoundary renderFallback={renderErrorAlert}>
+    <Screen
+      style={{
+        paddingTop: SIZE.xxl,
+      }}
+    >
+      <ErrorBoundary renderFallback={renderErrorAlert}>
+        <Suspense>
           <UserHeader login={login} avatarUrl={avatar_url} />
-        </ErrorBoundary>
-      </Suspense>
-
-      {/* <P>{JSON.stringify(theme.fonts, undefined, 2)}</P>
-      <P>bio: {user?.bio}</P>
-      <P>location: {user?.location}</P>
-      <P>company: {user?.company}</P>
-      <P>email: {user?.email}</P>
-      <P>blog: {user?.blog}</P>
-      <P>twitter_username: {user?.twitter_username}</P>
-      <P>created_at: {user?.created_at}</P>
-      <P>updated_at: {user?.updated_at}</P>
-      <P>public_repos: {user?.public_repos}</P>
-      <P>public_gists: {user?.public_gists}</P>
-      <P>followers: {user?.followers}</P>
-      <P>following: {user?.following}</P>
-      <P>hireable: {user?.hireable ? "Yes" : "No"}</P>
-      <P>type: {user?.type}</P>
-      <P>site_admin: {user?.site_admin ? "Yes" : "No"}</P>
-      <P>id: {user?.id}</P>
-      <P>node_id: {user?.node_id}</P>
-      <P>url: {user?.url}</P>
-      <P>html_url: {user?.html_url}</P>
-      <P>followers_url: {user?.followers_url}</P>
-      <P>following_url: {user?.following_url}</P>
-      <P>gists_url: {user?.gists_url}</P>
-      <P>starred_url: {user?.starred_url}</P>
-      <P>subscriptions_url: {user?.subscriptions_url}</P>
-      <P>organizations_url: {user?.organizations_url}</P>
-      <P>repos_url: {user?.repos_url}</P>
-      <P>events_url: {user?.events_url}</P>
-      <P>received_events_url: {user?.received_events_url}</P> */}
+        </Suspense>
+      </ErrorBoundary>
     </Screen>
   );
 }
@@ -72,20 +53,88 @@ function UserHeader({
   const user = query.data;
 
   return (
-    <View
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
+    <SpaceBetween direction="vertical" size="xl" align="center">
       <AppSharedElement id={`avatar.${user?.avatar_url || avatarUrl}`}>
         <Avatar.Image
-          size={250}
+          size={140}
           source={{ uri: user?.avatar_url || avatarUrl }}
         />
       </AppSharedElement>
-      <H1 style={{ margin: SIZE.xxl }}>{user?.name}</H1>
-    </View>
+
+      <SpaceBetween direction="vertical" align="center" size="sm">
+        <H1>{user?.name || login}</H1>
+        <H2>@{login}</H2>
+        {user?.bio ? <P>{user.bio}</P> : null}
+      </SpaceBetween>
+
+      {(user?.company || user?.location) && (
+        <SpaceBetween direction="vertical" align="center" size="sm">
+          {user?.company ? (
+            <Stat iconName="company" iconColor="onSurface">
+              <P>{user.company}</P>
+            </Stat>
+          ) : null}
+          {user?.location ? (
+            <Stat iconName="location" iconColor="onSurface">
+              <P>{user.location}</P>
+            </Stat>
+          ) : null}
+        </SpaceBetween>
+      )}
+
+      {(user?.email || user?.blog || user?.twitter_username) && (
+        <SpaceBetween size="xl" justify="center" align="center">
+          {user?.email ? (
+            <Stat iconName="email" iconColor="onSurface">
+              <AppExternalLink href={`mailto:${user.email}`}>
+                <P>{user.email}</P>
+              </AppExternalLink>
+            </Stat>
+          ) : null}
+          {user?.blog ? (
+            <Stat iconName="blog" iconColor="onSurface">
+              <AppExternalLink
+                href={
+                  user.blog.startsWith("http")
+                    ? user.blog
+                    : `https://${user.blog}`
+                }
+              >
+                <P>{user.blog.replace(/^https?:\/\//, "")}</P>
+              </AppExternalLink>
+            </Stat>
+          ) : null}
+          {user?.twitter_username ? (
+            <AppExternalLink
+              href={`https://twitter.com/${user.twitter_username}`}
+            >
+              <Stat iconName="twitter">
+                <P>@{user.twitter_username}</P>
+              </Stat>
+            </AppExternalLink>
+          ) : null}
+        </SpaceBetween>
+      )}
+
+      <SpaceBetween justify="center" size="xl">
+        <Stat iconName="followers">
+          <P>
+            <P>{user?.followers ?? "?"}</P>{" "}
+            {t("GithubUserDescriptionScreen.followers")}
+          </P>
+        </Stat>
+        <Stat iconName="following">
+          <P>
+            <P>{user?.following ?? "?"}</P>{" "}
+            {t("GithubUserDescriptionScreen.following")}
+          </P>
+        </Stat>
+
+        <Stat iconName="repos">
+          <P>{user?.public_repos ?? "?"}</P>{" "}
+          {t("GithubUserDescriptionScreen.repos")}
+        </Stat>
+      </SpaceBetween>
+    </SpaceBetween>
   );
 }

@@ -7,7 +7,7 @@ export function searchUsersQuery(input: SearchUsersInput) {
     getNextPageParam: (lastPage, allPages, lastPageParam = 0) => lastPage.incomplete_results ? lastPageParam + 1 : null,
     queryKey: ["github", "search", "users", input],
     queryFn: async ({ pageParam }) => {
-      return DEBUG_FAKE_RESPONSE; // For debugging purposes, replace with actual API call in production
+      // return DEBUG_FAKE_RESPONSE; // For debugging purposes, replace with actual API call in production
 
       const searchParams = new URLSearchParams();
       if (input.q) searchParams.set('q', input.q);
