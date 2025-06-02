@@ -1,5 +1,12 @@
+import { FavoriteUserButton } from "@/components/FavoriteUserButton";
 import { t } from "@/i18n/t";
-import { AppRouteName } from "@/navigation/types";
+import {
+  AppRouteName,
+  FavoritesStackParamList,
+  ListStackParamList,
+  SearchStackParamList,
+} from "@/navigation/types";
+import { SIZE } from "@/styles/constants";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -22,7 +29,7 @@ function useStackOptions() {
         borderBottomWidth: 1,
       },
       headerTintColor: theme.colors.onSurface,
-      contentStyle: { backgroundColor: theme.colors.surface }, // Web 
+      contentStyle: { backgroundColor: theme.colors.surface }, // Web
       cardStyle: { backgroundColor: theme.colors.surface }, // Native
       animation: "fade_from_bottom",
       animationDuration: 100,
@@ -34,7 +41,7 @@ function useStackOptions() {
   } as const;
 }
 
-const ListStack = createAppStack();
+const ListStack = createAppStack<ListStackParamList>();
 function ListStackScreen() {
   const props = useStackOptions();
 
@@ -50,16 +57,17 @@ function ListStackScreen() {
       />
       <ListStack.Screen
         name={AppRouteName.GithubUserDescriptionScreen}
-        component={GithubUserDescriptionScreen as never}
-        options={({ route: { params } }) => ({
-          title: t("GithubUserDescriptionScreen.title", params as never),
+        component={GithubUserDescriptionScreen}
+        options={({ route: { params } }: any) => ({
+          title: t("GithubUserDescriptionScreen.title", params),
+          headerRight: () => <FavoriteUserButton login={params.login} style={{ paddingRight: SIZE.lg }} />,
         })}
       />
     </ListStack.Navigator>
   );
 }
 
-const SearchStack = createAppStack();
+const SearchStack = createAppStack<SearchStackParamList>();
 function SearchStackScreen() {
   const props = useStackOptions();
 
@@ -75,16 +83,17 @@ function SearchStackScreen() {
       />
       <SearchStack.Screen
         name={AppRouteName.GithubUserDescriptionScreen}
-        component={GithubUserDescriptionScreen as never}
-        options={({ route: { params } }) => ({
-          title: t("GithubUserDescriptionScreen.title", params as never),
+        component={GithubUserDescriptionScreen}
+        options={({ route: { params } }: any) => ({
+          title: t("GithubUserDescriptionScreen.title", params),
+          headerRight: () => <FavoriteUserButton login={params.login} style={{ paddingRight: SIZE.lg }} />,
         })}
       />
     </SearchStack.Navigator>
   );
 }
 
-const FavoritesStack = createAppStack();
+const FavoritesStack = createAppStack<FavoritesStackParamList>();
 function FavoritesStackScreen() {
   const props = useStackOptions();
 
@@ -100,9 +109,10 @@ function FavoritesStackScreen() {
       />
       <FavoritesStack.Screen
         name={AppRouteName.GithubUserDescriptionScreen}
-        component={GithubUserDescriptionScreen as never}
-        options={({ route: { params } }) => ({
-          title: t("GithubUserDescriptionScreen.title", params as never),
+        component={GithubUserDescriptionScreen}
+        options={({ route: { params } }: any) => ({
+          title: t("GithubUserDescriptionScreen.title", params),
+          headerRight: () => <FavoriteUserButton login={params.login} style={{ paddingRight: SIZE.lg }} />,
         })}
       />
     </FavoritesStack.Navigator>

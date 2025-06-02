@@ -16,6 +16,8 @@ const mapIcon = {
   email: "mail-outline",
   blog: "link-outline",
   twitter: "logo-twitter",
+  favorited: 'star',
+  unfavorited: 'star-outline'
 } as const;
 
 const defaultColors = {

@@ -8,13 +8,13 @@ import { ListRenderItemInfo } from "@shopify/flash-list";
 import { useQuery } from "@tanstack/react-query";
 import { Avatar, List } from "react-native-paper";
 import { AppSharedElement } from "./common/AppSharedElement";
-import { H2 } from "./common/H2";
 import { P } from "./common/P";
 import { SpaceBetween } from "./common/SpaceBetween";
 import { useContainerStyle } from "./common/useContainerStyle";
+import { useTextStyle } from "./common/useTextStyle";
 
 type Item = {
-  avatar_url: string;
+  avatar_url?: string;
   login: string;
 };
 
@@ -31,22 +31,22 @@ export function GithubUserListItem({
     public_repos,
     twitter_username,
   } = query.data ?? {};
+  const avatarUrl = query.data?.avatar_url ?? avatar_url;
 
   const containerStyle = useContainerStyle();
 
   const linkProps = useLinkProps({
     screen: AppRouteName.GithubUserDescriptionScreen,
-    params: { login, avatar_url },
+    params: { login, avatar_url: avatarUrl },
   });
+
+  const h2Style = useTextStyle("h2");
 
   return (
     <List.Item
       {...linkProps}
-      title={
-        <>
-          <H2>{name || login}</H2>
-        </>
-      }
+      title={name || login}
+      titleStyle={h2Style}
       description={
         <SpaceBetween direction="vertical">
           {name && login && (
@@ -86,8 +86,8 @@ export function GithubUserListItem({
         </SpaceBetween>
       }
       left={() => (
-        <AppSharedElement id={`avatar.${avatar_url}`}>
-          <Avatar.Image size={SIZE.xxxl} source={{ uri: avatar_url }} />
+        <AppSharedElement id={`avatar.${avatarUrl}`}>
+          <Avatar.Image size={SIZE.xxxl} source={{ uri: avatarUrl }} />
         </AppSharedElement>
       )}
       right={() => <List.Icon icon="chevron-right" />}

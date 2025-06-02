@@ -1,5 +1,17 @@
-import { Text } from "react-native";
+import { renderErrorAlert } from "@/components/common/ErrorAlert";
+import { ErrorBoundary } from "@/components/common/ErrorBoundary";
+import { Screen } from "@/components/common/Screen";
+import { FavoriteGithubUserList } from "@/components/FavoriteGithubUserList";
+import { Suspense } from "react";
 
 export function FavoritesScreen() {
-    return <Text>Favorites</Text>
+  return (
+    <Screen>
+      <ErrorBoundary renderFallback={renderErrorAlert}>
+        <Suspense>
+          <FavoriteGithubUserList />
+        </Suspense>
+      </ErrorBoundary>
+    </Screen>
+  );
 }

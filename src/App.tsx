@@ -1,19 +1,25 @@
-import { Roboto_400Regular, Roboto_600SemiBold, Roboto_700Bold, useFonts } from '@expo-google-fonts/roboto';
-import { Assets as NavigationAssets } from '@react-navigation/elements';
-import { Asset } from 'expo-asset';
-import { hideAsync, preventAutoHideAsync } from 'expo-splash-screen';
-import React from 'react';
+import {
+  Roboto_400Regular,
+  Roboto_600SemiBold,
+  Roboto_700Bold,
+  useFonts,
+} from "@expo-google-fonts/roboto";
+import { Assets as NavigationAssets } from "@react-navigation/elements";
+import { Asset } from "expo-asset";
+import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
+import { SQLiteProvider } from "expo-sqlite";
+import React, { Suspense } from "react";
 import { useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { MD3DarkTheme, MD3LightTheme, PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import QueryClientProvider from "./components/query/QueryClientProvider";
-import { AppNavigationContainer, RootStack } from './navigation';
-import { FONT_WEIGHT } from './styles/constants';
+import { DB_NAME } from "./db/constants";
+import { migrateDbIfNeeded } from "./db/migrateDbIfNeeded";
+import { AppNavigationContainer, RootStack } from "./navigation";
+import { FONT_WEIGHT } from "./styles/constants";
 
-Asset.loadAsync([
-  ...NavigationAssets,
-]);
+Asset.loadAsync([...NavigationAssets]);
 
 preventAutoHideAsync();
 
@@ -36,41 +42,95 @@ export function App() {
       : { ...MD3LightTheme, colors: colors.light, fonts };
 
   return (
-    <GestureHandlerRootView>
-      <SafeAreaProvider>
-        <PaperProvider theme={paperTheme}>
-          <QueryClientProvider>
-            <AppNavigationContainer
-              onReady={() => {
-                hideAsync();
-              }}>
-              <RootStack />
-            </AppNavigationContainer>
-          </QueryClientProvider>
-        </PaperProvider>
-      </SafeAreaProvider>
-    </GestureHandlerRootView>
+    <Suspense>
+      <SQLiteProvider
+        databaseName={DB_NAME}
+        onInit={migrateDbIfNeeded}
+        useSuspense
+      >
+        <GestureHandlerRootView>
+          <SafeAreaProvider>
+            <PaperProvider theme={paperTheme}>
+              <QueryClientProvider>
+                <AppNavigationContainer
+                  onReady={() => {
+                    hideAsync();
+                  }}
+                >
+                  <RootStack />
+                </AppNavigationContainer>
+              </QueryClientProvider>
+            </PaperProvider>
+          </SafeAreaProvider>
+        </GestureHandlerRootView>
+      </SQLiteProvider>
+    </Suspense>
   );
 }
 
 const fonts = {
   ...MD3LightTheme.fonts,
-  displayLarge: { ...MD3LightTheme.fonts.displayLarge, fontWeight: FONT_WEIGHT.heavy },
-  displayMedium: { ...MD3LightTheme.fonts.displayMedium, fontWeight: FONT_WEIGHT.medium },
-  displaySmall: { ...MD3LightTheme.fonts.displaySmall, fontWeight: FONT_WEIGHT.light },
-  headlineLarge: { ...MD3LightTheme.fonts.headlineLarge, fontWeight: FONT_WEIGHT.heavy },
-  headlineMedium: { ...MD3LightTheme.fonts.headlineMedium, fontWeight: FONT_WEIGHT.medium },
-  headlineSmall: { ...MD3LightTheme.fonts.headlineSmall, fontWeight: FONT_WEIGHT.light },
-  titleLarge: { ...MD3LightTheme.fonts.titleLarge, fontWeight: FONT_WEIGHT.heavy },
-  titleMedium: { ...MD3LightTheme.fonts.titleMedium, fontWeight: FONT_WEIGHT.medium },
-  titleSmall: { ...MD3LightTheme.fonts.titleSmall, fontWeight: FONT_WEIGHT.light },
-  labelLarge: { ...MD3LightTheme.fonts.labelLarge, fontWeight: FONT_WEIGHT.heavy },
-  labelMedium: { ...MD3LightTheme.fonts.labelMedium, fontWeight: FONT_WEIGHT.medium },
-  labelSmall: { ...MD3LightTheme.fonts.labelSmall, fontWeight: FONT_WEIGHT.light },
-  bodyLarge: { ...MD3LightTheme.fonts.bodyLarge, fontWeight: FONT_WEIGHT.heavy },
-  bodyMedium: { ...MD3LightTheme.fonts.bodyMedium, fontWeight: FONT_WEIGHT.medium },
-  bodySmall: { ...MD3LightTheme.fonts.bodySmall, fontWeight: FONT_WEIGHT.light },
-}
+  displayLarge: {
+    ...MD3LightTheme.fonts.displayLarge,
+    fontWeight: FONT_WEIGHT.heavy,
+  },
+  displayMedium: {
+    ...MD3LightTheme.fonts.displayMedium,
+    fontWeight: FONT_WEIGHT.medium,
+  },
+  displaySmall: {
+    ...MD3LightTheme.fonts.displaySmall,
+    fontWeight: FONT_WEIGHT.light,
+  },
+  headlineLarge: {
+    ...MD3LightTheme.fonts.headlineLarge,
+    fontWeight: FONT_WEIGHT.heavy,
+  },
+  headlineMedium: {
+    ...MD3LightTheme.fonts.headlineMedium,
+    fontWeight: FONT_WEIGHT.medium,
+  },
+  headlineSmall: {
+    ...MD3LightTheme.fonts.headlineSmall,
+    fontWeight: FONT_WEIGHT.light,
+  },
+  titleLarge: {
+    ...MD3LightTheme.fonts.titleLarge,
+    fontWeight: FONT_WEIGHT.heavy,
+  },
+  titleMedium: {
+    ...MD3LightTheme.fonts.titleMedium,
+    fontWeight: FONT_WEIGHT.medium,
+  },
+  titleSmall: {
+    ...MD3LightTheme.fonts.titleSmall,
+    fontWeight: FONT_WEIGHT.light,
+  },
+  labelLarge: {
+    ...MD3LightTheme.fonts.labelLarge,
+    fontWeight: FONT_WEIGHT.heavy,
+  },
+  labelMedium: {
+    ...MD3LightTheme.fonts.labelMedium,
+    fontWeight: FONT_WEIGHT.medium,
+  },
+  labelSmall: {
+    ...MD3LightTheme.fonts.labelSmall,
+    fontWeight: FONT_WEIGHT.light,
+  },
+  bodyLarge: {
+    ...MD3LightTheme.fonts.bodyLarge,
+    fontWeight: FONT_WEIGHT.heavy,
+  },
+  bodyMedium: {
+    ...MD3LightTheme.fonts.bodyMedium,
+    fontWeight: FONT_WEIGHT.medium,
+  },
+  bodySmall: {
+    ...MD3LightTheme.fonts.bodySmall,
+    fontWeight: FONT_WEIGHT.light,
+  },
+};
 
 const colors = {
   light: {
@@ -114,7 +174,6 @@ const colors = {
     surfaceDisabled: "rgba(30, 27, 30, 0.12)",
     onSurfaceDisabled: "rgba(30, 27, 30, 0.38)",
     backdrop: "rgba(53, 46, 54, 0.4)",
-
 
     card: "rgb(255, 251, 255)",
     text: "rgb(30, 27, 30)",
@@ -162,7 +221,6 @@ const colors = {
     surfaceDisabled: "rgba(232, 224, 229, 0.12)",
     onSurfaceDisabled: "rgba(232, 224, 229, 0.38)",
     backdrop: "rgba(53, 46, 54, 0.4)",
-
 
     card: "rgb(30, 27, 30)",
     text: "rgb(232, 224, 229)",

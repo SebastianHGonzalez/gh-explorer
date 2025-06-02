@@ -38,7 +38,8 @@
         }
       ],
       "expo-font",
-      "react-native-edge-to-edge"
+      "react-native-edge-to-edge",
+      "expo-sqlite"
     ],
     "extra": {
       "eas": {

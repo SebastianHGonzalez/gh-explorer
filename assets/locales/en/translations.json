@@ -1,6 +1,8 @@
 {
+  "FavoriteGithubUserList.empty": "No results",
   "FavoritesScreen.title": "Favorites",
   "FavoritesStackScreen.tab": "Favorites",
+  "FavoriteUserButton.accessibilityLabel": "Toggle favorite",
   "GithubUserDescriptionScreen.followers": "Followers",
   "GithubUserDescriptionScreen.following": "Following",
   "GithubUserDescriptionScreen.repos": "Repos",
