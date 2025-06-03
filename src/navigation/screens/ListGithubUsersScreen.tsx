@@ -7,11 +7,11 @@ import { Suspense } from "react";
 export function ListGithubUsersScreen() {
   return (
     <Screen>
-      <ErrorBoundary renderFallback={renderErrorAlert}>
-        <Suspense>
+      <Suspense>
+        <ErrorBoundary renderFallback={renderErrorAlert}>
           <GithubUserList />
-        </Suspense>
-      </ErrorBoundary>
+        </ErrorBoundary>
+      </Suspense>
     </Screen>
   );
 }

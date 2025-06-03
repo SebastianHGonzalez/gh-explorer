@@ -14,7 +14,7 @@ import { t } from "@/i18n/t";
 import { AppRouteName, ScreenParams } from "@/navigation/types";
 import { SIZE } from "@/styles/constants";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -32,11 +32,17 @@ export function GithubUserDescriptionScreen({ route }: Props) {
         paddingTop: SIZE.xxl,
       }}
     >
-      <ErrorBoundary renderFallback={renderErrorAlert}>
-        <Suspense>
+      <Suspense>
+        <ErrorBoundary renderFallback={renderErrorAlert}>
           <UserHeader login={login} avatarUrl={avatar_url} />
-        </Suspense>
-      </ErrorBoundary>
+        </ErrorBoundary>
+      </Suspense>
+
+      <Suspense>
+        <ErrorBoundary renderFallback={renderErrorAlert}>
+          <UserRepos login={login} />
+        </ErrorBoundary>
+      </Suspense>
     </Screen>
   );
 }
@@ -48,7 +54,7 @@ function UserHeader({
   login: string;
   avatarUrl?: string;
 }) {
-  const query = useQuery(describeUserQuery(login));
+  const query = useSuspenseQuery(describeUserQuery(login));
   const user = query.data;
 
   return (
@@ -144,4 +150,8 @@ function UserHeader({
       </SpaceBetween>
     </ScrollView>
   );
+}
+
+function UserRepos({ login }: { login: string }) {
+  return null;
 }

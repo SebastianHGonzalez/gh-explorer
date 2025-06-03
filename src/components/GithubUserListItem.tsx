@@ -1,9 +1,9 @@
-import { describeUserQuery } from "@/apis/github/users/[login]";
+import { DescribeUser, describeUserQuery } from "@/apis/github/users/[login]";
 import { t } from "@/i18n/t";
 import { AppRouteName } from "@/navigation/types";
 import { useLinkProps } from "@react-navigation/native";
 import { ListRenderItemInfo } from "@shopify/flash-list";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { List } from "react-native-paper";
 import { AppAvatarImage } from "./common/AppAvatarImage";
 import { P } from "./common/P";
@@ -11,26 +11,36 @@ import { SpaceBetween } from "./common/SpaceBetween";
 import { Stat } from "./common/Stat";
 import { useContainerStyle } from "./common/useContainerStyle";
 import { useTextStyle } from "./common/useTextStyle";
+import { Suspense } from "react";
+import { ErrorBoundary } from "./common/ErrorBoundary";
 
 type Item = {
   avatar_url?: string;
   login: string;
 };
 
-export function GithubUserListItem({
-  item: { login, avatar_url },
-}: ListRenderItemInfo<Item>) {
-  const query = useQuery({ ...describeUserQuery(login) });
-  const {
+export function GithubUserListItem(props: ListRenderItemInfo<Item>) {
+  const fallback = <InternalGithubUserListItem {...props} />;
+
+  return (
+    <Suspense fallback={fallback}>
+      <ErrorBoundary fallback={fallback}>
+        <DetailedGithubUserListItem {...props} />
+      </ErrorBoundary>
+    </Suspense>
+  )
+}
+
+function InternalGithubUserListItem({ item: { login, avatar_url }, details }: ListRenderItemInfo<Item> & { details?: DescribeUser }) {
+   const {
     name,
-    bio,
     company,
     email,
     followers,
     public_repos,
     twitter_username,
-  } = query.data ?? {};
-  const avatarUrl = query.data?.avatar_url ?? avatar_url;
+  } = details ?? {};
+  const avatarUrl = details?.avatar_url ?? avatar_url;
 
   const containerStyle = useContainerStyle();
 
@@ -91,4 +101,11 @@ export function GithubUserListItem({
       accessibilityHint={t("GithubUserList.accessibilityHint")}
     />
   );
+}
+
+function DetailedGithubUserListItem(props: ListRenderItemInfo<Item>) {
+  const query = useSuspenseQuery(describeUserQuery(props.item.login));
+  const details = query.data;
+
+  return <InternalGithubUserListItem {...props} details={details} />;
 }

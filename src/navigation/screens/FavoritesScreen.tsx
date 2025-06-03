@@ -7,11 +7,11 @@ import { Suspense } from "react";
 export function FavoritesScreen() {
   return (
     <Screen>
-      <ErrorBoundary renderFallback={renderErrorAlert}>
-        <Suspense>
+      <Suspense>
+        <ErrorBoundary renderFallback={renderErrorAlert}>
           <FavoriteGithubUserList />
-        </Suspense>
-      </ErrorBoundary>
+        </ErrorBoundary>
+      </Suspense>
     </Screen>
   );
 }

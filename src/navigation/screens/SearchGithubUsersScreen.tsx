@@ -13,7 +13,7 @@ import { FONT_WEIGHT, SIZE } from "@/styles/constants";
 import { useFocusEffect } from "@react-navigation/native";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useDebouncedValue } from "@tanstack/react-pacer/debouncer";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { Suspense, useCallback, useMemo, useRef, useState } from "react";
 import {
   Keyboard,
@@ -54,11 +54,11 @@ export function SearchGithubUsersScreen() {
         />
 
         {debouncedQ.length > 3 && (
-          <ErrorBoundary renderFallback={renderErrorAlert}>
-            <Suspense>
+          <Suspense>
+            <ErrorBoundary renderFallback={renderErrorAlert}>
               <SearchResults q={debouncedQ} per_page={10} />
-            </Suspense>
-          </ErrorBoundary>
+            </ErrorBoundary>
+          </Suspense>
         )}
       </Screen>
     </TouchableWithoutFeedback>
@@ -66,7 +66,7 @@ export function SearchGithubUsersScreen() {
 }
 
 function SearchResults(props: SearchUsersInput) {
-  const search = useInfiniteQuery(searchUsersQuery(props));
+  const search = useSuspenseInfiniteQuery(searchUsersQuery(props));
   const results = useMemo(
     () => search.data?.pages.flatMap((page) => page.items) ?? [],
     [search.data?.pages],
@@ -97,7 +97,7 @@ function SearchResults(props: SearchUsersInput) {
       onEndReached={() => {
         search.fetchNextPage();
       }}
-      estimatedItemSize={200}
+      estimatedItemSize={150}
     />
   );
 }

@@ -22,6 +22,7 @@ export class ErrorBoundary extends Component<PropsWithChildren<ErrorBoundaryProp
     }
     componentDidCatch(error: unknown, errorInfo: unknown) {
         console.error(error, errorInfo);
+        this.setState({ error: error instanceof Error ? error : new Error(String(error)) });
     }
     render() {
         if (this.state.error) {

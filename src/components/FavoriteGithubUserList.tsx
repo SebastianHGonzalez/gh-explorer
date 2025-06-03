@@ -26,7 +26,7 @@ export function FavoriteGithubUserList() {
         keyExtractor={keyExtractor}
         renderItem={renderItem}
         ListEmptyComponent={EmptyList}
-        estimatedItemSize={200}
+        estimatedItemSize={150}
         refreshControl={
           <AppRefreshControl
             refreshing={query.isRefetching}
