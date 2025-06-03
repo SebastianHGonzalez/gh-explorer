@@ -1,9 +1,11 @@
+import { t } from "@/i18n/t";
 import { HttpError } from "@/utils/HttpError";
 import { InfiniteData, infiniteQueryOptions } from "@tanstack/react-query";
 import z from "zod";
 
 export function searchUsersQuery(input: SearchUsersInput) {
   return infiniteQueryOptions<SearchUsers, Error, InfiniteData<SearchUsers>, unknown[], number>({
+    enabled: input.q.length >= 3,
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam = 0) => lastPage.incomplete_results ? lastPageParam + 1 : null,
     queryKey: ["github", "search", "users", input],
@@ -21,8 +23,13 @@ export function searchUsersQuery(input: SearchUsersInput) {
       const url = `https://api.github.com/search/users?${searchParams.toString()}`;
 
       const response = await fetch(url);
+
+      if (response.status === 403) {
+        throw new HttpError(403, t('Github.RateLimitError'));
+      }
+
       if (!response.ok) {
-        throw HttpError.fromResponse(response);
+        throw await HttpError.fromResponse(response);
       }
 
       return response.json();

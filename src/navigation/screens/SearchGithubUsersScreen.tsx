@@ -3,8 +3,8 @@ import {
   SearchUsersInput,
   searchUsersQuery,
 } from "@/apis/github/search/users";
+import { EmptyState } from "@/components/common/EmptyState";
 import { ErrorAlert } from "@/components/common/ErrorAlert";
-import { ErrorBoundary } from "react-error-boundary";
 import { H4 } from "@/components/common/H4";
 import { Screen } from "@/components/common/Screen";
 import { GithubUserListItem } from "@/components/GithubUserListItem";
@@ -13,13 +13,14 @@ import { FONT_WEIGHT, SIZE } from "@/styles/constants";
 import { useFocusEffect } from "@react-navigation/native";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useDebouncedValue } from "@tanstack/react-pacer/debouncer";
-import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { Suspense, useCallback, useMemo, useRef, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import {
   Keyboard,
   Text,
   TextInput,
-  TouchableWithoutFeedback,
+  TouchableWithoutFeedback
 } from "react-native";
 import { Searchbar } from "react-native-paper";
 
@@ -53,20 +54,18 @@ export function SearchGithubUsersScreen() {
           style={{ marginVertical: SIZE.md }}
         />
 
-        {debouncedQ.length > 3 && (
-          <ErrorBoundary FallbackComponent={ErrorAlert} >
-            <Suspense>
-              <SearchResults q={debouncedQ} per_page={10} />
-            </Suspense>
-          </ErrorBoundary>
-        )}
+        <ErrorBoundary FallbackComponent={ErrorAlert}>
+          <Suspense>
+            <SearchResults q={debouncedQ} per_page={10} />
+          </Suspense>
+        </ErrorBoundary>
       </Screen>
     </TouchableWithoutFeedback>
   );
 }
 
 function SearchResults(props: SearchUsersInput) {
-  const search = useSuspenseInfiniteQuery(searchUsersQuery(props));
+  const search = useInfiniteQuery(searchUsersQuery(props));
   const results = useMemo(
     () => search.data?.pages.flatMap((page) => page.items) ?? [],
     [search.data?.pages],
@@ -75,6 +74,7 @@ function SearchResults(props: SearchUsersInput) {
   return (
     <FlashList
       data={results}
+      ListEmptyComponent={EmptyState}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
       onScroll={Keyboard.dismiss}

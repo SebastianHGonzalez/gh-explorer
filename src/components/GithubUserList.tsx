@@ -1,17 +1,21 @@
 import { ListUsers, listUsersQuery } from "@/apis/github/users";
 import { t } from "@/i18n/t";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
-import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { List } from "react-native-paper";
 import { AppRefreshControl } from "./common/AppRefreshControl";
 import { useTextStyle } from "./common/useTextStyle";
 import { GithubUserListItem } from "./GithubUserListItem";
+import { Image, View } from "react-native";
+import { EmptyState } from "./common/EmptyState";
+import { ErrorMessage } from "./common/ErrorMessage";
+import { H1 } from "./common/H1";
 
 type Item = ListUsers[number];
 
 export function GithubUserList() {
-  const query = useSuspenseInfiniteQuery(listUsersQuery());
+  const query = useInfiniteQuery(listUsersQuery());
   const users = useMemo(
     () => query.data?.pages?.flat() || [],
     [query.data?.pages],
@@ -22,7 +26,15 @@ export function GithubUserList() {
       data={users}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
-      ListEmptyComponent={EmptyList}
+      ListEmptyComponent={
+        query.isError ? (
+          <ErrorMessage>
+            <H1>{query.error.message}</H1>
+          </ErrorMessage>
+        ) : (
+          EmptyState
+        )
+      }
       estimatedItemSize={150}
       refreshControl={
         <AppRefreshControl
@@ -40,9 +52,4 @@ function keyExtractor(item: Item) {
 
 function renderItem(info: ListRenderItemInfo<Item>) {
   return <GithubUserListItem {...info} />;
-}
-
-function EmptyList() {
-  const h4Style = useTextStyle("h4");
-  return <List.Item title={t("GithubUserList.empty")} titleStyle={h4Style} />;
 }

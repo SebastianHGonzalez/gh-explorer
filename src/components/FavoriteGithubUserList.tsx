@@ -2,10 +2,10 @@ import { useListFavoriteUsers } from "@/hooks/gh-explorer/favorites/useListFavor
 import { t } from "@/i18n/t";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useMemo } from "react";
-import { List } from "react-native-paper";
 import { AppRefreshControl } from "./common/AppRefreshControl";
+import { EmptyFavorites } from "./common/EmptyFavorites";
 import { ErrorAlert } from "./common/ErrorAlert";
-import { useTextStyle } from "./common/useTextStyle";
+import { H1 } from "./common/H1";
 import { GithubUserListItem } from "./GithubUserListItem";
 
 type Item = { login: string };
@@ -47,8 +47,9 @@ function renderItem(info: ListRenderItemInfo<Item>) {
 }
 
 function EmptyList() {
-  const h4Style = useTextStyle("h4");
   return (
-    <List.Item title={t("FavoriteGithubUserList.empty")} titleStyle={h4Style} />
+    <EmptyFavorites>
+      <H1>{t("FavoriteGithubUserList.empty")}</H1>
+    </EmptyFavorites>
   );
 }

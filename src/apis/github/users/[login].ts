@@ -1,3 +1,4 @@
+import { t } from "@/i18n/t";
 import { HttpError } from "@/utils/HttpError";
 import { queryOptions } from "@tanstack/react-query";
 import { z } from "zod";
@@ -10,8 +11,13 @@ export function describeUserQuery(login: string | undefined) {
       // return DEBUG_FAKE_RESPONSE; // For debugging purposes, replace with actual API call in production
 
       const response = await fetch(`https://api.github.com/users/${login}`);
+
+      if (response.status === 403) {
+        throw new HttpError(403, t('Github.RateLimitError'));
+      }
+
       if (!response.ok) {
-        throw HttpError.fromResponse(response);
+        throw await HttpError.fromResponse(response);
       }
 
       return response.json();

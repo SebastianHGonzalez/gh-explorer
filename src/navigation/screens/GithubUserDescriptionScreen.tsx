@@ -3,7 +3,7 @@ import { AppAvatarImage } from "@/components/common/AppAvatarImage";
 import { AppExternalLink } from "@/components/common/AppExternalLink";
 import { AppRefreshControl } from "@/components/common/AppRefreshControl";
 import { ErrorAlert } from "@/components/common/ErrorAlert";
-import { ErrorBoundary } from "react-error-boundary";
+import { ErrorMessage } from "@/components/common/ErrorMessage";
 import { H1 } from "@/components/common/H1";
 import { H2 } from "@/components/common/H2";
 import { P } from "@/components/common/P";
@@ -14,8 +14,9 @@ import { t } from "@/i18n/t";
 import { AppRouteName, ScreenParams } from "@/navigation/types";
 import { SIZE } from "@/styles/constants";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { ScrollView } from "react-native-gesture-handler";
 
 type Props = NativeStackScreenProps<
@@ -32,13 +33,11 @@ export function GithubUserDescriptionScreen({ route }: Props) {
         paddingTop: SIZE.xxl,
       }}
     >
-      <ErrorBoundary FallbackComponent={ErrorAlert} >
+      <ErrorBoundary FallbackComponent={() => <ErrorMessage><H1>{t("GithubUserDescriptionScreen.error")}</H1></ErrorMessage>} >
         <Suspense>
           <UserHeader login={login} avatarUrl={avatar_url} />
         </Suspense>
-      </ErrorBoundary>
 
-      <ErrorBoundary FallbackComponent={ErrorAlert} >
         <Suspense>
           <UserRepos login={login} />
         </Suspense>
@@ -54,7 +53,7 @@ function UserHeader({
   login: string;
   avatarUrl?: string;
 }) {
-  const query = useSuspenseQuery(describeUserQuery(login));
+  const query = useQuery(describeUserQuery(login));
   const user = query.data;
 
   return (

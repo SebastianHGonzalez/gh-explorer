@@ -1,3 +1,4 @@
+import { t } from "@/i18n/t";
 import { HttpError } from "@/utils/HttpError";
 import { InfiniteData, infiniteQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
@@ -18,8 +19,13 @@ export function listUsersQuery() {
       const url = `https://api.github.com/users?${searchParams.toString()}`;
 
       const response = await fetch(url);
+
+      if (response.status === 403) {
+        throw new HttpError(403, t('Github.RateLimitError'));
+      }
+
       if (!response.ok) {
-        throw HttpError.fromResponse(response);
+        throw await HttpError.fromResponse(response);
       }
 
       return response.json();
