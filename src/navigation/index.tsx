@@ -1,3 +1,4 @@
+import { AppIcon } from "@/components/common/AppIcon";
 import { FavoriteUserButton } from "@/components/FavoriteUserButton";
 import { t } from "@/i18n/t";
 import {
@@ -7,7 +8,6 @@ import {
   SearchStackParamList,
 } from "@/navigation/types";
 import { SIZE } from "@/styles/constants";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -141,8 +141,8 @@ function TabsStack() {
         options={{
           headerShown: false,
           tabBarLabel: t("ListStackScreen.tab"),
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="people-outline" color={color} size={size} />
+          tabBarIcon: ({ color, size, focused }) => (
+            <AppIcon name={focused ? 'tabHomeFocused' : 'tabHome'} color={color as never} size={size} />
           ),
         }}
       />
@@ -152,8 +152,8 @@ function TabsStack() {
         options={{
           headerShown: false,
           tabBarLabel: t("SearchStackScreen.tab"),
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="search-outline" color={color} size={size} />
+          tabBarIcon: ({ color, size, focused }) => (
+            <AppIcon name={focused ? 'tabSearchFocused' : 'tabSearch'} color={color as never} size={size} />
           ),
         }}
       />
@@ -163,8 +163,8 @@ function TabsStack() {
         options={{
           headerShown: false,
           tabBarLabel: t("FavoritesStackScreen.tab"),
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="star-outline" color={color} size={size} />
+          tabBarIcon: ({ color, size, focused }) => (
+            <AppIcon name={focused ? 'tabFavoritesFocused' : 'tabFavorites'} color={color as never} size={size} />
           ),
         }}
       />

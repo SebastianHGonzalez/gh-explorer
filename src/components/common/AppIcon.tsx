@@ -5,7 +5,7 @@ import type { MD3Colors } from "react-native-paper/lib/typescript/types";
 
 export type AppIconName = keyof typeof mapIcon;
 export type AppIconColor = keyof Omit<MD3Colors, "elevation">;
-export type AppIconSize = keyof typeof SIZE;
+export type AppIconSize = keyof typeof SIZE | number;
 
 const mapIcon = {
   followers: "people-outline",
@@ -17,7 +17,13 @@ const mapIcon = {
   blog: "link-outline",
   twitter: "logo-twitter",
   favorited: 'star',
-  unfavorited: 'star-outline'
+  unfavorited: 'star-outline',
+  tabHome: 'home-outline',
+  tabHomeFocused: 'home',
+  tabSearch: 'search-outline',
+  tabSearchFocused: 'search',
+  tabFavorites: 'star-outline',
+  tabFavoritesFocused: 'star',
 } as const;
 
 const defaultColors = {
@@ -36,10 +42,10 @@ export function AppIcon({ name, size = "xl", color }: AppIconProps) {
   return (
     <Ionicons
       name={mapIcon[name]}
-      size={SIZE[size]}
+      size={typeof size === 'number' ? size : SIZE[size]}
       color={
         color
-          ? theme.colors[color]
+          ? (theme.colors[color] || color)
           : (defaultColors as any)[name] || theme.colors.primary
       }
     />
