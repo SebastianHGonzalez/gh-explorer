@@ -29,7 +29,7 @@ export function GithubUserList() {
       ListEmptyComponent={
         query.isError ? (
           <ErrorMessage>
-            <H1>{query.error.message}</H1>
+            <H1 style={{ maxWidth: 400, textAlign: 'center' }}>{query.error.message}</H1>
           </ErrorMessage>
         ) : (
           EmptyState

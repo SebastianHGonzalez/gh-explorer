@@ -20,7 +20,7 @@ export function listUsersQuery() {
 
       const response = await fetch(url);
 
-      if (response.status === 403) {
+      if (response.status === 403 || response.status === 429) {
         throw new HttpError(403, t('Github.RateLimitError'));
       }
 

@@ -12,7 +12,7 @@ export function describeUserQuery(login: string | undefined) {
 
       const response = await fetch(`https://api.github.com/users/${login}`);
 
-      if (response.status === 403) {
+      if (response.status === 403 || response.status === 429) {
         throw new HttpError(403, t('Github.RateLimitError'));
       }
 
