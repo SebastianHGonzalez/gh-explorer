@@ -13,14 +13,14 @@ export enum AppRouteName {
   GithubUserDescriptionScreen = "GithubUserDescriptionScreen",
 }
 
-type ScreenParams = {
-  [AppRouteName.Tabs]: undefined;
-  [AppRouteName.ListGithubUsersTabScreen]: undefined;
-  [AppRouteName.SearchGithubUsersTabScreen]: undefined;
-  [AppRouteName.FavoritesTabScreen]: undefined;
-  [AppRouteName.ListGithubUsersScreen]: undefined;
-  [AppRouteName.SearchGithubUsersScreen]: undefined;
-  [AppRouteName.FavoritesScreen]: undefined;
+export type ScreenParams = {
+  [AppRouteName.Tabs]: {};
+  [AppRouteName.ListGithubUsersTabScreen]: {};
+  [AppRouteName.SearchGithubUsersTabScreen]: {};
+  [AppRouteName.FavoritesTabScreen]: {};
+  [AppRouteName.ListGithubUsersScreen]: {};
+  [AppRouteName.SearchGithubUsersScreen]: {};
+  [AppRouteName.FavoritesScreen]: {};
   [AppRouteName.GithubUserDescriptionScreen]: {
     login: string;
     avatar_url?: string;

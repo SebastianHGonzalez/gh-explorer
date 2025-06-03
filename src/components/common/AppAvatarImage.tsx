@@ -18,7 +18,7 @@ export function AppAvatarImage({
   ...props
 }: AppAvatarImageProps) {
   const { colors } = useTheme();
-  const calcSize = typeof size === 'number' ? size : SIZE[size] || SIZE.md;
+  const calcSize = typeof size === "number" ? size : SIZE[size] || SIZE.md;
   const defaultStyle = {
     width: calcSize,
     height: calcSize,
@@ -27,12 +27,10 @@ export function AppAvatarImage({
   };
 
   return (
-    <View {...containerProps} style={[defaultStyle, containerProps?.style]}>
-      <Animated.Image
-        style={[defaultStyle, style]}
-        accessibilityIgnoresInvertColors
-        {...props}
-      />
-    </View>
+    <Animated.Image
+      style={[defaultStyle, style]}
+      accessibilityIgnoresInvertColors
+      {...props}
+    />
   );
 }

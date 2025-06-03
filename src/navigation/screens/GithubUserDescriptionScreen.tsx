@@ -11,7 +11,7 @@ import { Screen } from "@/components/common/Screen";
 import { SpaceBetween } from "@/components/common/SpaceBetween";
 import { Stat } from "@/components/common/Stat";
 import { t } from "@/i18n/t";
-import { AppRouteName, ListStackParamList } from "@/navigation/types";
+import { AppRouteName, ScreenParams } from "@/navigation/types";
 import { SIZE } from "@/styles/constants";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useQuery } from "@tanstack/react-query";
@@ -19,7 +19,7 @@ import { Suspense } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 
 type Props = NativeStackScreenProps<
-  ListStackParamList,
+  ScreenParams,
   AppRouteName.GithubUserDescriptionScreen
 >;
 

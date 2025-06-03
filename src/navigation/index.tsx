@@ -25,18 +25,9 @@ function useStackOptions() {
     screenOptions: {
       headerStyle: {
         backgroundColor: theme.colors.surface,
-        borderBottomColor: theme.colors.onSurface,
-        borderBottomWidth: 1,
       },
       headerTintColor: theme.colors.onSurface,
-      contentStyle: { backgroundColor: theme.colors.surface }, // Web
-      cardStyle: { backgroundColor: theme.colors.surface }, // Native
-      animation: "fade_from_bottom",
-      animationDuration: 100,
-      animationMatchesGesture: true,
-      gestureEnabled: true,
-      gestureDirection: "vertical",
-      fullScreenGestureEnabled: true,
+      contentStyle: { backgroundColor: theme.colors.surface },
     },
   } as const;
 }
@@ -58,7 +49,7 @@ function ListStackScreen() {
       <ListStack.Screen
         name={AppRouteName.GithubUserDescriptionScreen}
         component={GithubUserDescriptionScreen}
-        options={({ route: { params } }: any) => ({
+        options={({ route: { params } }) => ({
           title: t("GithubUserDescriptionScreen.title", params),
           headerRight: () => <FavoriteUserButton login={params.login} style={{ paddingRight: SIZE.lg }} />,
         })}
@@ -84,7 +75,7 @@ function SearchStackScreen() {
       <SearchStack.Screen
         name={AppRouteName.GithubUserDescriptionScreen}
         component={GithubUserDescriptionScreen}
-        options={({ route: { params } }: any) => ({
+        options={({ route: { params } }) => ({
           title: t("GithubUserDescriptionScreen.title", params),
           headerRight: () => <FavoriteUserButton login={params.login} style={{ paddingRight: SIZE.lg }} />,
         })}
@@ -110,7 +101,7 @@ function FavoritesStackScreen() {
       <FavoritesStack.Screen
         name={AppRouteName.GithubUserDescriptionScreen}
         component={GithubUserDescriptionScreen}
-        options={({ route: { params } }: any) => ({
+        options={({ route: { params } }) => ({
           title: t("GithubUserDescriptionScreen.title", params),
           headerRight: () => <FavoriteUserButton login={params.login} style={{ paddingRight: SIZE.lg }} />,
         })}
