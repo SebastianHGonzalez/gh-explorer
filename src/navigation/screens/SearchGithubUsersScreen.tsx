@@ -14,14 +14,13 @@ import { useFocusEffect } from "@react-navigation/native";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useDebouncedValue } from "@tanstack/react-pacer/debouncer";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { Suspense, useCallback, useMemo, useRef, useState } from "react";
 import {
-  Suspense,
-  useCallback,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { Text, TextInput } from "react-native";
+  Keyboard,
+  Text,
+  TextInput,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { Searchbar } from "react-native-paper";
 
 type Item = SearchUsers["items"][number];
@@ -36,34 +35,33 @@ export function SearchGithubUsersScreen() {
   }, []);
 
   const searchbarRef = useRef<TextInput>(null);
-  useFocusEffect(
-    useCallback(() => {
-      // Focus the searchbar when the screen is focused
-      setTimeout(() => {
-        searchbarRef.current?.focus?.();
-      }, 100);
-    }, []),
-  );
+  useFocusEffect(() => {
+    if (q.length > 0) return;
+    setTimeout(() => {
+      searchbarRef.current?.focus?.();
+    }, 100);
+  });
 
   return (
-    <Screen>
-      <Searchbar
-        ref={searchbarRef}
-        autoFocus
-        placeholder={t("SearchGithubUsersScreen.placeholder")}
-        onChangeText={onChangeSearch}
-        value={q}
-        style={{ marginVertical: SIZE.md }}
-      />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Screen>
+        <Searchbar
+          ref={searchbarRef}
+          placeholder={t("SearchGithubUsersScreen.placeholder")}
+          onChangeText={onChangeSearch}
+          value={q}
+          style={{ marginVertical: SIZE.md }}
+        />
 
-      {debouncedQ.length > 3 && (
-        <ErrorBoundary renderFallback={renderErrorAlert}>
-          <Suspense>
-            <SearchResults q={debouncedQ} per_page={10} />
-          </Suspense>
-        </ErrorBoundary>
-      )}
-    </Screen>
+        {debouncedQ.length > 3 && (
+          <ErrorBoundary renderFallback={renderErrorAlert}>
+            <Suspense>
+              <SearchResults q={debouncedQ} per_page={10} />
+            </Suspense>
+          </ErrorBoundary>
+        )}
+      </Screen>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -79,6 +77,7 @@ function SearchResults(props: SearchUsersInput) {
       data={results}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
+      onScroll={Keyboard.dismiss}
       ListHeaderComponent={
         search.isSuccess ? (
           <H4 style={{ margin: SIZE.md }}>
@@ -104,7 +103,7 @@ function SearchResults(props: SearchUsersInput) {
 }
 
 function keyExtractor(item: Item) {
-  return item.id.toString();
+  return item.login.toString();
 }
 
 function renderItem(info: ListRenderItemInfo<Item>) {

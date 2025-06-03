@@ -77,7 +77,7 @@ export function GithubUserListItem({
       }
       left={() => (
         <AppAvatarImage
-          sharedTransitionTag="avatar"
+          sharedTransitionTag={`avatar.${login}`}
           size="xxxl"
           source={{ uri: avatarUrl }}
         />

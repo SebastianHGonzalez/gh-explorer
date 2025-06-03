@@ -1,4 +1,8 @@
 {
+  "ErrorAlert.403": "Límite de tasa alcanzado. Por favor, inténtelo de nuevo más tarde.",
+  "ErrorAlert.404": "Usuario no encontrado.",
+  "ErrorAlert.500": "Se produjo un error inesperado. Por favor, inténtelo de nuevo más tarde.",
+  "ErrorAlert.default": "Se produjo un error inesperado. Por favor, inténtelo de nuevo más tarde.",
   "FavoriteGithubUserList.empty": "No hay resultados",
   "FavoritesScreen.title": "Favoritos",
   "FavoritesStackScreen.tab": "Favoritos",

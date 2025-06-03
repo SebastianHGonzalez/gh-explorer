@@ -1,4 +1,8 @@
 {
+  "ErrorAlert.403": "Rate limited. Please try again later.",
+  "ErrorAlert.404": "User not found.",
+  "ErrorAlert.500": "An unexpected error occurred. Please try again later.",
+  "ErrorAlert.default": "An unexpected error occurred. Please try again later.",
   "FavoriteGithubUserList.empty": "No results",
   "FavoritesScreen.title": "Favorites",
   "FavoritesStackScreen.tab": "Favorites",

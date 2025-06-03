@@ -62,7 +62,7 @@ function UserHeader({
     >
       <SpaceBetween direction="vertical" size="xl" align="center">
         <AppAvatarImage
-          sharedTransitionTag="avatar"
+          sharedTransitionTag={`avatar.${login}`}
           size={140}
           source={{ uri: user?.avatar_url || avatarUrl }}
         />

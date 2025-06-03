@@ -1,3 +1,4 @@
+import { HttpError } from "@/utils/HttpError";
 import { InfiniteData, infiniteQueryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 
@@ -18,7 +19,7 @@ export function listUsersQuery() {
 
       const response = await fetch(url);
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw HttpError.fromResponse(response);
       }
 
       return response.json();

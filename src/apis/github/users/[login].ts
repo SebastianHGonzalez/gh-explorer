@@ -1,3 +1,4 @@
+import { HttpError } from "@/utils/HttpError";
 import { queryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 
@@ -10,7 +11,7 @@ export function describeUserQuery(login: string | undefined) {
 
       const response = await fetch(`https://api.github.com/users/${login}`);
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw HttpError.fromResponse(response);
       }
 
       return response.json();

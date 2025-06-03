@@ -40,7 +40,7 @@ export function GithubUserList() {
 }
 
 function keyExtractor(item: Item) {
-  return item.id.toString();
+  return item.login.toString();
 }
 
 function renderItem(info: ListRenderItemInfo<Item>) {

@@ -9,9 +9,13 @@ export const translationGetters = {
   es: () => require("../../assets/locales/es/translations.json"),
 };
 
-function getTranslations(): Record<string, string> {
+export function getCurrentLocale() {
   const locales = getLocales();
-  const currentLocale = locales[0]?.languageCode || DEFAULT_LANGUAGE;
+  return locales[0]?.languageCode || DEFAULT_LANGUAGE;
+}
+
+function getTranslations(): Record<string, string> {
+  const currentLocale = getCurrentLocale();
   const translationGetter =
     (translationGetters as any)[currentLocale] ??
     translationGetters[DEFAULT_LANGUAGE];
