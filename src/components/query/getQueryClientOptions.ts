@@ -4,9 +4,9 @@ export function getQueryClientOptions(): QueryClientConfig {
   return {
     defaultOptions: {
       queries: {
-        retry: 0,
+        retry: 1,
+        retryDelay: 1000, // 1 second
         staleTime: 1000 * 60 * 5, // 5 minutes
-        // staleTime: 1,
         gcTime: 1000 * 60 * 60, // 1 hours
       },
     },

@@ -3,8 +3,8 @@ import {
   SearchUsersInput,
   searchUsersQuery,
 } from "@/apis/github/search/users";
-import { renderErrorAlert } from "@/components/common/ErrorAlert";
-import { ErrorBoundary } from "@/components/common/ErrorBoundary";
+import { ErrorAlert } from "@/components/common/ErrorAlert";
+import { ErrorBoundary } from "react-error-boundary";
 import { H4 } from "@/components/common/H4";
 import { Screen } from "@/components/common/Screen";
 import { GithubUserListItem } from "@/components/GithubUserListItem";
@@ -54,11 +54,11 @@ export function SearchGithubUsersScreen() {
         />
 
         {debouncedQ.length > 3 && (
-          <Suspense>
-            <ErrorBoundary renderFallback={renderErrorAlert}>
+          <ErrorBoundary FallbackComponent={ErrorAlert} >
+            <Suspense>
               <SearchResults q={debouncedQ} per_page={10} />
-            </ErrorBoundary>
-          </Suspense>
+            </Suspense>
+          </ErrorBoundary>
         )}
       </Screen>
     </TouchableWithoutFeedback>

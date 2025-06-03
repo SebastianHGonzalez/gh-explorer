@@ -2,8 +2,8 @@ import { describeUserQuery } from "@/apis/github/users/[login]";
 import { AppAvatarImage } from "@/components/common/AppAvatarImage";
 import { AppExternalLink } from "@/components/common/AppExternalLink";
 import { AppRefreshControl } from "@/components/common/AppRefreshControl";
-import { renderErrorAlert } from "@/components/common/ErrorAlert";
-import { ErrorBoundary } from "@/components/common/ErrorBoundary";
+import { ErrorAlert } from "@/components/common/ErrorAlert";
+import { ErrorBoundary } from "react-error-boundary";
 import { H1 } from "@/components/common/H1";
 import { H2 } from "@/components/common/H2";
 import { P } from "@/components/common/P";
@@ -32,17 +32,17 @@ export function GithubUserDescriptionScreen({ route }: Props) {
         paddingTop: SIZE.xxl,
       }}
     >
-      <Suspense>
-        <ErrorBoundary renderFallback={renderErrorAlert}>
+      <ErrorBoundary FallbackComponent={ErrorAlert} >
+        <Suspense>
           <UserHeader login={login} avatarUrl={avatar_url} />
-        </ErrorBoundary>
-      </Suspense>
+        </Suspense>
+      </ErrorBoundary>
 
-      <Suspense>
-        <ErrorBoundary renderFallback={renderErrorAlert}>
+      <ErrorBoundary FallbackComponent={ErrorAlert} >
+        <Suspense>
           <UserRepos login={login} />
-        </ErrorBoundary>
-      </Suspense>
+        </Suspense>
+      </ErrorBoundary>
     </Screen>
   );
 }

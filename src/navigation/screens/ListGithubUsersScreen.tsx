@@ -1,5 +1,5 @@
-import { renderErrorAlert } from "@/components/common/ErrorAlert";
-import { ErrorBoundary } from "@/components/common/ErrorBoundary";
+import { ErrorAlert } from "@/components/common/ErrorAlert";
+import { ErrorBoundary } from "react-error-boundary";
 import { Screen } from "@/components/common/Screen";
 import { GithubUserList } from "@/components/GithubUserList";
 import { Suspense } from "react";
@@ -7,11 +7,11 @@ import { Suspense } from "react";
 export function ListGithubUsersScreen() {
   return (
     <Screen>
-      <Suspense>
-        <ErrorBoundary renderFallback={renderErrorAlert}>
+      <ErrorBoundary FallbackComponent={ErrorAlert} >
+        <Suspense>
           <GithubUserList />
-        </ErrorBoundary>
-      </Suspense>
+        </Suspense>
+      </ErrorBoundary>
     </Screen>
   );
 }
