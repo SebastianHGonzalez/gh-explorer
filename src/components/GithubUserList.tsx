@@ -1,12 +1,13 @@
 import { ListUsers, listUsersQuery } from "@/apis/github/users";
 import { t } from "@/i18n/t";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { List } from "react-native-paper";
+import { AppRefreshControl } from "./common/AppRefreshControl";
 import { ErrorAlert } from "./common/ErrorAlert";
-import { GithubUserListItem } from "./GithubUserListItem";
 import { useTextStyle } from "./common/useTextStyle";
+import { GithubUserListItem } from "./GithubUserListItem";
 
 type Item = ListUsers[number];
 
@@ -14,7 +15,7 @@ export function GithubUserList() {
   const query = useInfiniteQuery(listUsersQuery());
   const users = useMemo(
     () => query.data?.pages?.flat() || [],
-    [query.data?.pages]
+    [query.data?.pages],
   );
 
   return (
@@ -27,6 +28,12 @@ export function GithubUserList() {
         renderItem={renderItem}
         ListEmptyComponent={EmptyList}
         estimatedItemSize={200}
+        refreshControl={
+          <AppRefreshControl
+            refreshing={query.isRefetching}
+            onRefresh={query.refetch}
+          />
+        }
       />
     </>
   );
@@ -41,6 +48,6 @@ function renderItem(info: ListRenderItemInfo<Item>) {
 }
 
 function EmptyList() {
-  const h4Style = useTextStyle('h4');
+  const h4Style = useTextStyle("h4");
   return <List.Item title={t("GithubUserList.empty")} titleStyle={h4Style} />;
 }
