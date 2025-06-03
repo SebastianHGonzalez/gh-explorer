@@ -1,15 +1,14 @@
 import { describeUserQuery } from "@/apis/github/users/[login]";
 import { t } from "@/i18n/t";
 import { AppRouteName } from "@/navigation/types";
-import { SIZE } from "@/styles/constants";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { useLinkProps } from "@react-navigation/native";
 import { ListRenderItemInfo } from "@shopify/flash-list";
 import { useQuery } from "@tanstack/react-query";
-import { Avatar, List } from "react-native-paper";
-import { AppSharedElement } from "./common/AppSharedElement";
+import { List } from "react-native-paper";
+import { AppAvatarImage } from "./common/AppAvatarImage";
 import { P } from "./common/P";
 import { SpaceBetween } from "./common/SpaceBetween";
+import { Stat } from "./common/Stat";
 import { useContainerStyle } from "./common/useContainerStyle";
 import { useTextStyle } from "./common/useTextStyle";
 
@@ -57,38 +56,31 @@ export function GithubUserListItem({
 
           {email && <P>{email}</P>}
 
-          <SpaceBetween>
+          <SpaceBetween size="lg">
             {followers && (
-              <SpaceBetween size="sm">
-                <P>
-                  <Ionicons size={SIZE.lg} name="person" />
-                </P>
-                <P>{followers}</P>
-              </SpaceBetween>
+              <Stat iconSize="lg" iconName="followers">
+                {followers}
+              </Stat>
             )}
             {public_repos && (
-              <SpaceBetween size="sm">
-                <P>
-                  <Ionicons size={SIZE.lg} name="book-sharp" />
-                </P>
-                <P>{public_repos}</P>
-              </SpaceBetween>
+              <Stat iconSize="lg" iconName="repos">
+                {public_repos}
+              </Stat>
             )}
             {twitter_username && (
-              <SpaceBetween size="sm">
-                <P>
-                  <Ionicons size={SIZE.lg} name="logo-twitter" />
-                </P>
-                <P>{twitter_username}</P>
-              </SpaceBetween>
+              <Stat iconSize="lg" iconName="twitter">
+                {twitter_username}
+              </Stat>
             )}
           </SpaceBetween>
         </SpaceBetween>
       }
       left={() => (
-        <AppSharedElement id={`avatar.${avatarUrl}`}>
-          <Avatar.Image size={SIZE.xxxl} source={{ uri: avatarUrl }} />
-        </AppSharedElement>
+        <AppAvatarImage
+          sharedTransitionTag={`avatar.${avatarUrl}`}
+          size="xxxl"
+          source={{ uri: avatarUrl }}
+        />
       )}
       right={() => <List.Icon icon="chevron-right" />}
       style={containerStyle}

@@ -36,7 +36,7 @@ export async function getAllFavorites(
     `SELECT * FROM Favorites ORDER BY updatedAt DESC LIMIT ? OFFSET ?`,
     [limit, offset],
   );
-  return rows.map((row) => favoritesSchema.parse(row));
+  return rows.map((row) => favoritesSchema.parse(row)).filter(row => row?.login);
 }
 
 export const addFavoriteInputSchema = favoritesSchema.pick({ login: true });

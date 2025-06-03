@@ -10,9 +10,9 @@ import { SIZE } from "@/styles/constants";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ComponentProps } from "react";
 import { useTheme } from "react-native-paper";
-import { createAppStack } from "./createAppStack";
 import { FavoritesScreen } from "./screens/FavoritesScreen";
 import { GithubUserDescriptionScreen } from "./screens/GithubUserDescriptionScreen";
 import { ListGithubUsersScreen } from "./screens/ListGithubUsersScreen";
@@ -41,7 +41,7 @@ function useStackOptions() {
   } as const;
 }
 
-const ListStack = createAppStack<ListStackParamList>();
+const ListStack = createNativeStackNavigator<ListStackParamList>();
 function ListStackScreen() {
   const props = useStackOptions();
 
@@ -67,7 +67,7 @@ function ListStackScreen() {
   );
 }
 
-const SearchStack = createAppStack<SearchStackParamList>();
+const SearchStack = createNativeStackNavigator<SearchStackParamList>();
 function SearchStackScreen() {
   const props = useStackOptions();
 
@@ -93,7 +93,7 @@ function SearchStackScreen() {
   );
 }
 
-const FavoritesStack = createAppStack<FavoritesStackParamList>();
+const FavoritesStack = createNativeStackNavigator<FavoritesStackParamList>();
 function FavoritesStackScreen() {
   const props = useStackOptions();
 
@@ -181,7 +181,7 @@ function TabsStack() {
   );
 }
 
-const Stack = createAppStack();
+const Stack = createNativeStackNavigator();
 export function RootStack() {
   const props = useStackOptions();
 

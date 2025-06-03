@@ -1,2 +1,0 @@
-patchedDependencies:
-  '@tanstack/query-core@5.79.0': patches/@tanstack__query-core@5.79.0.patch

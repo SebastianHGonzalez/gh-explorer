@@ -12,18 +12,16 @@ export function listFavoritesQuery(
   db: SQLiteDatabase,
   input?: GetAllFavoritesInput,
 ) {
-  return infiniteQueryOptions<
-    ListFavorites,
-    Error,
-    InfiniteData<ListFavorites>,
-    unknown[],
-    number
-  >({
+  return infiniteQueryOptions<ListFavorites,Error,InfiniteData<ListFavorites>,unknown[],number>({
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam = 0) =>
       lastPageParam + 1,
     queryKey: ["gh-explorer", "favorites"],
     queryFn: async ({ pageParam }) =>
       getAllFavorites(db, { ...input, offset: pageParam }),
+    initialData: {
+      pages: [],
+      pageParams: [],
+    },
   });
 }

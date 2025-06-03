@@ -1,7 +1,6 @@
 import { describeUserQuery } from "@/apis/github/users/[login]";
+import { AppAvatarImage } from "@/components/common/AppAvatarImage";
 import { AppExternalLink } from "@/components/common/AppExternalLink";
-import { AppIcon } from "@/components/common/AppIcon";
-import { AppSharedElement } from "@/components/common/AppSharedElement";
 import { renderErrorAlert } from "@/components/common/ErrorAlert";
 import { ErrorBoundary } from "@/components/common/ErrorBoundary";
 import { H1 } from "@/components/common/H1";
@@ -15,9 +14,7 @@ import { AppRouteName, ListStackParamList } from "@/navigation/types";
 import { SIZE } from "@/styles/constants";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useQuery } from "@tanstack/react-query";
-import { PropsWithChildren, Suspense } from "react";
-import { StyleSheet, View } from "react-native";
-import { Avatar, useTheme } from "react-native-paper";
+import { Suspense } from "react";
 
 type Props = NativeStackScreenProps<
   ListStackParamList,
@@ -54,12 +51,11 @@ function UserHeader({
 
   return (
     <SpaceBetween direction="vertical" size="xl" align="center">
-      <AppSharedElement id={`avatar.${user?.avatar_url || avatarUrl}`}>
-        <Avatar.Image
-          size={140}
-          source={{ uri: user?.avatar_url || avatarUrl }}
-        />
-      </AppSharedElement>
+      <AppAvatarImage
+        sharedTransitionTag={`avatar.${user?.avatar_url || avatarUrl}`}
+        size={140}
+        source={{ uri: user?.avatar_url || avatarUrl }}
+      />
 
       <SpaceBetween direction="vertical" align="center" size="sm">
         <H1>{user?.name || login}</H1>
