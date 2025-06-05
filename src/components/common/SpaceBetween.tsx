@@ -16,6 +16,7 @@ interface SpaceBetweenProps {
     | "space-around"
     | "space-evenly";
   size?: Size;
+  wrap?: 'wrap' | 'no-wrap';
   style?: ViewStyle;
   asChild?: boolean;
 }
@@ -36,6 +37,7 @@ export function SpaceBetween({
   size = "md",
   align,
   justify,
+  wrap = "wrap",
   style,
   asChild,
   children,
@@ -47,7 +49,7 @@ export function SpaceBetween({
       style={StyleSheet.flatten([
         baseStyle,
         directionStyle[direction],
-        { alignItems: align, gap: SIZE[size], justifyContent: justify },
+        { alignItems: align, gap: SIZE[size], justifyContent: justify, flexWrap: wrap },
         style,
       ])}
     >
