@@ -1,7 +1,7 @@
 import {
     Image, View
 } from "react-native";
-import SpaceExploration from "@/../assets/svg/space-exploration.svg";
+import SpaceExplorationSVG from "@/../assets/svg/space-exploration.svg";
 
 export function EmptyState() {
   return (
@@ -14,7 +14,7 @@ export function EmptyState() {
         minHeight: 600,
       }}
     >
-      <SpaceExploration
+      <SpaceExplorationSVG
         width="100%"
         height={400}
         style={{

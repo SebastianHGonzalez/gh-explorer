@@ -2,6 +2,7 @@ import { PropsWithChildren } from "react";
 import {
     Image, View
 } from "react-native";
+import EmptyFavoritesSVG from "@/../assets/svg/empty-favorites.svg";
 
 export function EmptyFavorites({ children }: PropsWithChildren) {
   return (
@@ -14,11 +15,11 @@ export function EmptyFavorites({ children }: PropsWithChildren) {
         minHeight: 600,
       }}
     >
-      <Image
-        source={require("@/../assets/svg/empty-favorites.svg")}
+      <EmptyFavoritesSVG
+        width="100%"
+        height={400}
         style={{
-          width: "100%",
-          height: 400, // or use 'flex: 1' for full height
+          maxWidth: "100%",
         }}
         resizeMode="contain"
       />

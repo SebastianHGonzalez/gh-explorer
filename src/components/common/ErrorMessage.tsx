@@ -4,6 +4,7 @@ import {
 import {
     Image, View
 } from "react-native";
+import PageErrorSVG from "@/../assets/svg/page-error.svg";
 
 export function ErrorMessage({ children }: PropsWithChildren) {
   return (
@@ -16,11 +17,11 @@ export function ErrorMessage({ children }: PropsWithChildren) {
         minHeight: 600,
       }}
     >
-      <Image
-        source={require("@/../assets/svg/page-error.svg")}
+      <PageErrorSVG
+        width="100%"
+        height={400}
         style={{
-          width: "100%",
-          height: 400, // or use 'flex: 1' for full height
+          maxWidth: "100%",
         }}
         resizeMode="contain"
       />
