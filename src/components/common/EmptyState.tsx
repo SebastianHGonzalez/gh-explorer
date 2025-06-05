@@ -1,6 +1,7 @@
 import {
     Image, View
 } from "react-native";
+import SpaceExploration from "@/../assets/svg/space-exploration.svg";
 
 export function EmptyState() {
   return (
@@ -13,11 +14,11 @@ export function EmptyState() {
         minHeight: 600,
       }}
     >
-      <Image
-        source={require("@/../assets/svg/space-exploration.svg")}
+      <SpaceExploration
+        width="100%"
+        height={400}
         style={{
-          width: "100%",
-          height: 400, // or use 'flex: 1' for full height
+          maxWidth: "100%",
         }}
         resizeMode="contain"
       />
